@@ -1,7 +1,7 @@
 <script setup>
-import { RouterView } from 'vue-router'
-import Sidebar from './Sidebar.vue'
-import Header from './Header.vue'
+import { RouterView } from "vue-router";
+import Sidebar from "./Sidebar.vue";
+import Header from "./Header.vue";
 </script>
 
 <template>
@@ -10,13 +10,17 @@ import Header from './Header.vue'
     <Sidebar />
 
     <!-- Contenu principal à droite -->
+    <!-- Contenu principal à droite -->
     <div class="flex flex-1 flex-col overflow-hidden">
       <Header />
-      
+
       <main class="flex-1 overflow-y-auto p-6">
-        <RouterView />
+        <div
+          class="min-h-full mx-auto flex flex-col md:flex-row items-center justify-between gap-12 bg-white p-8 rounded-xl shadow-sm border border-slate-100"
+        >
+          <RouterView />
+        </div>
       </main>
     </div>
   </div>
 </template>
-

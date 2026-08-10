@@ -1,0 +1,1 @@
+<template><h1>avantages</h1></template>
