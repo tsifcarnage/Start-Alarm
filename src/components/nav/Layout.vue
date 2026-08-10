@@ -10,7 +10,6 @@ import Header from "./Header.vue";
     <Sidebar />
 
     <!-- Contenu principal à droite -->
-    <!-- Contenu principal à droite -->
     <div class="flex flex-1 flex-col overflow-hidden">
       <Header />
 
