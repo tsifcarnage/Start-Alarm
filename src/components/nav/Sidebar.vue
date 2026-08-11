@@ -7,15 +7,15 @@
   >
     <div>
       <!-- Logo Start Alarm -->
-      <div class="mb-6 px-2 py-1 flex justify-center items-center h-20 overflow-hidden">
+      <RouterLink to="/" class="mb-6 px-2 py-1 flex justify-center items-center h-20 overflow-hidden">
         <img 
-          src="/src/assets/img/logoStartAlarm.jpg" 
+          src="/src/assets/img/logoStartAlarm.svg" 
           alt="Start Alarm" 
           class="
             'object-contain transition-all duration-300'
           " 
         />
-      </div>
+      </RouterLink>
 
       <!-- Section Titre Menu + Bouton Flèche -->
       <div class="flex items-center justify-between mb-4 px-3 text-slate-800 font-bold">
