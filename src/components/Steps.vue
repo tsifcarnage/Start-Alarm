@@ -43,11 +43,12 @@
   <!-- VUE 2 : Slider de vidéos -->
   <div
     v-else
-    class="relative w-full h-full min-h-87 md:col-span-3 flex items-center justify-center rounded-xl overflow-hidden p-1 group"
-    :style="{ backgroundColor: 'var(--dark-blue)' }"
+    class="relative border-3 border-(--color) w-full h-88 md:col-span-3 flex items-center justify-center rounded-xl overflow-hidden p-1 group"
+    :style="{ borderColor: `var(--${activeStep.color})` }"
   >
     <!-- Bouton Fermer (X) -->
     <button
+      type="button"
       @click="closeVideo"
       class="absolute top-4 left-4 text-white hover:text-slate-300 font-bold text-2xl cursor-pointer z-30 bg-slate-900/60 w-9 h-9 rounded-full flex items-center justify-center backdrop-blur-sm"
       aria-label="Fermer la vidéo"
@@ -58,7 +59,6 @@
     <!-- Lecteur Vidéo (en boucle) -->
     <video
       ref="videoRef"
-      :key="currentVideoIndex"
       :src="activeStep.videos[currentVideoIndex]"
       autoplay
       muted
@@ -67,7 +67,7 @@
       loop
       :class="[
         'w-full h-full max-h-126 object-contain rounded-lg cursor-pointer',
-        { 'hide-controls': isPlaying }
+        { 'hide-controls': isPlaying },
       ]"
     >
       Votre navigateur ne supporte pas la lecture de vidéos.
@@ -80,6 +80,7 @@
     >
       <!-- Flèche Précédent -->
       <button
+        type="button"
         @click="prevVideo"
         class="text-white/80 hover:text-white transition-colors cursor-pointer text-sm font-bold flex items-center justify-center w-6 h-6 rounded-full hover:bg-white/10"
         aria-label="Vidéo précédente"
@@ -90,6 +91,7 @@
       <!-- Puces d'indicateur -->
       <div class="flex items-center gap-2">
         <button
+          type="button"
           v-for="(_, index) in activeStep.videos"
           :key="index"
           @click="goToVideo(index)"
@@ -97,7 +99,7 @@
             'w-2.5 h-2.5 rounded-full transition-all cursor-pointer',
             currentVideoIndex === index
               ? 'bg-white scale-125'
-              : 'bg-white/40 hover:bg-white/70'
+              : 'bg-white/40 hover:bg-white/70',
           ]"
           :aria-label="`Aller à la vidéo ${index + 1}`"
         />
@@ -105,6 +107,7 @@
 
       <!-- Flèche Suivant -->
       <button
+        type="button"
         @click="nextVideo"
         class="text-white/80 hover:text-white transition-colors cursor-pointer text-sm font-bold flex items-center justify-center w-6 h-6 rounded-full hover:bg-white/10"
         aria-label="Vidéo suivante"
@@ -156,15 +159,24 @@ function prevVideo() {
 }
 
 function goToVideo(index) {
+  if (index === currentVideoIndex.value) return;
   currentVideoIndex.value = index;
   playCurrentVideo();
 }
 
+// On NE fait PLUS de .load() ici : changer :src suffit,
+// le navigateur charge la nouvelle source tout seul.
+// .load() forçait une réinitialisation complète du lecteur
+// (buffer vidé, readyState remis à zéro) => effet de "rafraîchissement".
 function playCurrentVideo() {
   isPlaying.value = true;
   nextTick(() => {
     if (videoRef.value) {
-      videoRef.value.play();
+      const playPromise = videoRef.value.play();
+      // Évite une erreur console si le navigateur refuse l'autoplay
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {});
+      }
     }
   });
 }
@@ -232,6 +244,13 @@ const steps = [
 </script>
 
 <style scoped>
+/* Empêche le navigateur de recaler le scroll quand la vidéo
+   change de taille/état pendant le chargement */
+.step-card,
+video {
+  overflow-anchor: none;
+}
+
 /* Masque les contrôles natifs pendant la lecture */
 video.hide-controls::-webkit-media-controls {
   display: none !important;
