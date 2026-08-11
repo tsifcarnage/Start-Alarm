@@ -40,29 +40,31 @@
     </div>
   </template>
 
-  <!-- VUE 2 : Affichage de la vidéo -->
+  <!-- VUE 2 : Slider de vidéos -->
   <div
     v-else
-    class="relative w-full h-full min-h-87 md:col-span-3 flex items-center justify-center rounded-xl overflow-hidden p-1"
+    class="relative w-full h-full min-h-87 md:col-span-3 flex items-center justify-center rounded-xl overflow-hidden p-1 group"
     :style="{ backgroundColor: 'var(--dark-blue)' }"
   >
+    <!-- Bouton Fermer (X) -->
     <button
       @click="closeVideo"
-      class="absolute top-4 left-4 text-white hover:text-slate-300 font-bold text-2xl cursor-pointer z-20 bg-slate-900/60 w-9 h-9 rounded-full flex items-center justify-center backdrop-blur-sm"
+      class="absolute top-4 left-4 text-white hover:text-slate-300 font-bold text-2xl cursor-pointer z-30 bg-slate-900/60 w-9 h-9 rounded-full flex items-center justify-center backdrop-blur-sm"
       aria-label="Fermer la vidéo"
     >
       ✕
     </button>
 
+    <!-- Lecteur Vidéo (en boucle) -->
     <video
       ref="videoRef"
+      :key="currentVideoIndex"
       :src="activeStep.videos[currentVideoIndex]"
       autoplay
       muted
       playsinline
       controls
-      :loop="activeStep.videos.length === 1"
-      @ended="playNextVideo"
+      loop
       :class="[
         'w-full h-full max-h-126 object-contain rounded-lg cursor-pointer',
         { 'hide-controls': isPlaying }
@@ -70,6 +72,46 @@
     >
       Votre navigateur ne supporte pas la lecture de vidéos.
     </video>
+
+    <!-- Barre de contrôle alignée en bas (Flèche Gauche - Puces - Flèche Droite) -->
+    <div
+      v-if="activeStep.videos.length > 1"
+      class="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-3 z-30 bg-slate-900/60 px-4 py-2 rounded-full backdrop-blur-sm shadow-lg"
+    >
+      <!-- Flèche Précédent -->
+      <button
+        @click="prevVideo"
+        class="text-white/80 hover:text-white transition-colors cursor-pointer text-sm font-bold flex items-center justify-center w-6 h-6 rounded-full hover:bg-white/10"
+        aria-label="Vidéo précédente"
+      >
+        ❮
+      </button>
+
+      <!-- Puces d'indicateur -->
+      <div class="flex items-center gap-2">
+        <button
+          v-for="(_, index) in activeStep.videos"
+          :key="index"
+          @click="goToVideo(index)"
+          :class="[
+            'w-2.5 h-2.5 rounded-full transition-all cursor-pointer',
+            currentVideoIndex === index
+              ? 'bg-white scale-125'
+              : 'bg-white/40 hover:bg-white/70'
+          ]"
+          :aria-label="`Aller à la vidéo ${index + 1}`"
+        />
+      </div>
+
+      <!-- Flèche Suivant -->
+      <button
+        @click="nextVideo"
+        class="text-white/80 hover:text-white transition-colors cursor-pointer text-sm font-bold flex items-center justify-center w-6 h-6 rounded-full hover:bg-white/10"
+        aria-label="Vidéo suivante"
+      >
+        ❯
+      </button>
+    </div>
   </div>
 </template>
 
@@ -93,19 +135,36 @@ function closeVideo() {
   isPlaying.value = false;
 }
 
-function playNextVideo() {
+function nextVideo() {
   if (!activeStep.value) return;
-
   if (currentVideoIndex.value < activeStep.value.videos.length - 1) {
     currentVideoIndex.value++;
   } else {
     currentVideoIndex.value = 0;
   }
+  playCurrentVideo();
+}
 
+function prevVideo() {
+  if (!activeStep.value) return;
+  if (currentVideoIndex.value > 0) {
+    currentVideoIndex.value--;
+  } else {
+    currentVideoIndex.value = activeStep.value.videos.length - 1;
+  }
+  playCurrentVideo();
+}
+
+function goToVideo(index) {
+  currentVideoIndex.value = index;
+  playCurrentVideo();
+}
+
+function playCurrentVideo() {
+  isPlaying.value = true;
   nextTick(() => {
     if (videoRef.value) {
       videoRef.value.play();
-      isPlaying.value = true;
     }
   });
 }
@@ -122,6 +181,10 @@ function handleKeyDown(event) {
       videoRef.value.pause();
       isPlaying.value = false;
     }
+  } else if (event.code === "ArrowRight") {
+    nextVideo();
+  } else if (event.code === "ArrowLeft") {
+    prevVideo();
   }
 }
 
@@ -169,52 +232,6 @@ const steps = [
 </script>
 
 <style scoped>
-/* Badge 'Vidéo démo' au survol */
-.step-card {
-  overflow: visible;
-}
-
-.step-card::after {
-  content: "Vidéo démo";
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background-color: rgba(15, 23, 42, 0.85);
-  color: #ffffff;
-  font-size: 0.65rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 4px 8px;
-  border-radius: 20px;
-  opacity: 0;
-  transform: translateY(-4px);
-  transition: all 0.25s ease-in-out;
-  max-width: 100px;
-  z-index: 10;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-}
-
-.step-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 0.75rem;
-  box-shadow: inset 0 0 0 2px rgba(59, 130, 246, 0.3);
-  opacity: 0;
-  transition: opacity 0.25s ease-in-out;
-  pointer-events: none;
-}
-
-.step-card:hover::after,
-.step-card:hover::before {
-  opacity: 1;
-}
-
-.step-card:hover::after {
-  transform: translateY(0);
-}
-
 /* Masque les contrôles natifs pendant la lecture */
 video.hide-controls::-webkit-media-controls {
   display: none !important;
