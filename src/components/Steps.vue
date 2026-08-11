@@ -56,7 +56,7 @@
       ✕
     </button>
 
-    <!-- Lecteur Vidéo (en boucle) -->
+    <!-- Lecteur Vidéo (Clic = Play / Pause) -->
     <video
       ref="videoRef"
       :src="activeStep.videos[currentVideoIndex]"
@@ -65,6 +65,7 @@
       playsinline
       controls
       loop
+      @click="togglePlayPause"
       :class="[
         'w-full h-full max-h-126 object-contain rounded-lg cursor-pointer',
         { 'hide-controls': isPlaying },
@@ -76,7 +77,7 @@
     <!-- Barre de contrôle alignée en bas (Flèche Gauche - Puces - Flèche Droite) -->
     <div
       v-if="activeStep.videos.length > 1"
-      class="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-3 z-30 bg-slate-900/60 px-4 py-2 rounded-full backdrop-blur-sm shadow-lg"
+      class="absolute bottom-1 right-1 flex items-center gap-3 z-30 bg-slate-900/60 p-2 rounded-full backdrop-blur-sm shadow-lg"
     >
       <!-- Flèche Précédent -->
       <button
@@ -138,6 +139,21 @@ function closeVideo() {
   isPlaying.value = false;
 }
 
+function togglePlayPause() {
+  if (!videoRef.value) return;
+
+  if (videoRef.value.paused) {
+    const playPromise = videoRef.value.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {});
+    }
+    isPlaying.value = true;
+  } else {
+    videoRef.value.pause();
+    isPlaying.value = false;
+  }
+}
+
 function nextVideo() {
   if (!activeStep.value) return;
   if (currentVideoIndex.value < activeStep.value.videos.length - 1) {
@@ -164,16 +180,11 @@ function goToVideo(index) {
   playCurrentVideo();
 }
 
-// On NE fait PLUS de .load() ici : changer :src suffit,
-// le navigateur charge la nouvelle source tout seul.
-// .load() forçait une réinitialisation complète du lecteur
-// (buffer vidé, readyState remis à zéro) => effet de "rafraîchissement".
 function playCurrentVideo() {
   isPlaying.value = true;
   nextTick(() => {
     if (videoRef.value) {
       const playPromise = videoRef.value.play();
-      // Évite une erreur console si le navigateur refuse l'autoplay
       if (playPromise !== undefined) {
         playPromise.catch(() => {});
       }
@@ -184,16 +195,7 @@ function playCurrentVideo() {
 function handleKeyDown(event) {
   if (!activeStep.value || !videoRef.value) return;
 
-  if (event.code === "Space") {
-    event.preventDefault();
-    if (videoRef.value.paused) {
-      videoRef.value.play();
-      isPlaying.value = true;
-    } else {
-      videoRef.value.pause();
-      isPlaying.value = false;
-    }
-  } else if (event.code === "ArrowRight") {
+  if (event.code === "ArrowRight") {
     nextVideo();
   } else if (event.code === "ArrowLeft") {
     prevVideo();
