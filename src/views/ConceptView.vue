@@ -10,58 +10,7 @@
 
     <!-- Grille des 3 étapes -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-      
-      <!-- Étape 1 -->
-      <div class="relative bg-slate-50/50 rounded-xl border-2 border-(--dark-blue) p-6 flex flex-col items-center text-center pt-8">
-        <!-- Pastille Numéro -->
-        <div class="absolute -top-5 w-10 h-10 rounded-full bg-(--dark-blue) text-white font-bold flex items-center justify-center shadow-sm">
-          1
-        </div>
-        <!-- Image / Illustration -->
-        <div class="h-40 w-full mb-4 flex items-center justify-center overflow-hidden rounded-lg">
-          <img src="/src/assets/img/dessinPlan.png" alt="Concevez sur plan" class="max-h-full object-contain" />
-        </div>
-        <!-- Titre & Description -->
-        <h3 class="text-lg font-bold text-[#003B71] mb-2">Concevez sur plan</h3>
-        <p class="text-xs text-slate-600 leading-relaxed">
-          Dessinez votre logement, placez vos capteurs et visualisez la zone couverte.
-        </p>
-      </div>
-
-      <!-- Étape 2 -->
-      <div class="relative bg-slate-50/50 rounded-xl border-2 border-(--light-blue) p-6 flex flex-col items-center text-center pt-8">
-        <!-- Pastille Numéro -->
-        <div class="absolute -top-5 w-10 h-10 rounded-full bg-(--light-blue) text-white font-bold flex items-center justify-center shadow-sm">
-          2
-        </div>
-        <!-- Image / Illustration -->
-        <div class="h-40 w-full mb-4 flex items-center justify-center overflow-hidden rounded-lg">
-          <img src="/src/assets/img/preparation.png" alt="Préparation" class="max-h-full object-contain" />
-        </div>
-        <!-- Titre & Description -->
-        <h3 class="text-lg font-bold text-[#003B71] mb-2">Préparation</h3>
-        <p class="text-xs text-slate-600 leading-relaxed">
-          Nous préprogrammons tout en atelier avant l'envoi.
-        </p>
-      </div>
-
-      <!-- Étape 3 -->
-      <div class="relative bg-slate-50/50 rounded-xl border-2 border-(--orange) p-6 flex flex-col items-center text-center pt-8">
-        <!-- Pastille Numéro -->
-        <div class="absolute -top-5 w-10 h-10 rounded-full bg-(--orange) text-white font-bold flex items-center justify-center shadow-sm">
-          3
-        </div>
-        <!-- Image / Illustration -->
-        <div class="h-40 w-full mb-4 flex items-center justify-center overflow-hidden rounded-lg">
-          <img src="/src/assets/img/installation.png" alt="Pose facile" class="max-h-full object-contain" />
-        </div>
-        <!-- Titre & Description -->
-        <h3 class="text-lg font-bold text-[#003B71] mb-2">Pose facile</h3>
-        <p class="text-xs text-slate-600 leading-relaxed">
-          Livraison, installation par vous-même ou faites appel à un pro.
-        </p>
-      </div>
-
+     <Steps/>
     </div>
 
     <!-- Pied de section : Texte d'aide & Bouton d'action -->
@@ -69,7 +18,7 @@
       
       <!-- Texte de support -->
       <div class="flex items-center text-xs font-semibold text-slate-600">
-        <span class="mr-1.5 text-amber-500 text-sm">👈</span>
+        <span class="mr-1.5 text-amber-500 text-sm">💡</span>
         <span>Besoin d'aide pendant votre création ?</span>
         <a href="#" class="ml-1 text-[#00A3E0] hover:underline">
           Nos conseillers peuvent vous accompagner
@@ -94,13 +43,9 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
+import Steps from '../components/Steps.vue';
 
 const router = useRouter()
-
-const goToPlan = () => {
-  // Redirige vers la page souhaitée
-  router.push('/carte') 
-}
 </script>
 
 <style scoped>
