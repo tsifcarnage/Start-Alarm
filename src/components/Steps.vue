@@ -77,7 +77,7 @@
     <!-- Barre de contrôle alignée en bas (Flèche Gauche - Puces - Flèche Droite) -->
     <div
       v-if="activeStep.videos.length > 1"
-      class="absolute bottom-1 right-1 flex items-center gap-3 z-30 bg-slate-900/60 p-2 rounded-full backdrop-blur-sm shadow-lg"
+      class="absolute bottom-1 right-1 flex items-center gap-3 z-30 bg-[#0f172b99] p-2 rounded-xl backdrop-blur-sm shadow-lg"
     >
       <!-- Flèche Précédent -->
       <button
