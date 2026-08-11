@@ -1,23 +1,21 @@
 <template>
-  <!-- VUE 1 : Cartes d'origine (masquées si activeStep est défini) -->
+  <!-- VUE 1 : Cartes d'origine -->
   <template v-if="!activeStep">
     <div
       v-for="step in steps"
       :key="step.number"
       @click="selectStep(step)"
-      :class="[
-        'step-card relative bg-slate-50/50 cursor-pointer transition-all duration-300 rounded-xl border-2 p-6 flex flex-col items-center text-center pt-8 hover:scale-105 hover:bg-slate-100',
-        `border-(--${step.color})`,
-      ]"
+      class="step-card relative bg-slate-50/50 cursor-pointer transition-all duration-300 rounded-xl border-2 p-6 flex flex-col items-center text-center pt-8 hover:scale-105 hover:bg-slate-100"
+      :style="{ borderColor: `var(--${step.color})` }"
     >
+      <!-- Pastille numéro -->
       <div
-        :class="[
-          'absolute -top-5 w-10 h-10 rounded-full text-white font-bold flex items-center justify-center shadow-sm',
-          `bg-(--${step.color})`,
-        ]"
+        class="absolute -top-5 w-10 h-10 rounded-full text-white font-bold flex items-center justify-center shadow-sm"
+        :style="{ backgroundColor: `var(--${step.color})` }"
       >
         {{ step.number }}
       </div>
+
       <div
         class="h-40 w-full mb-4 flex items-center justify-center overflow-hidden rounded-lg"
       >
@@ -27,24 +25,31 @@
           class="max-h-full object-contain rounded-md"
         />
       </div>
-      <h3 :class="['text-lg font-bold mb-2', `text-(--${step.color})`]">
+
+      <!-- Titre de l'étape -->
+      <h3
+        class="text-lg font-bold mb-2"
+        :style="{ color: `var(--${step.color})` }"
+      >
         {{ step.title }}
       </h3>
+
       <p class="text-xs text-slate-600 leading-relaxed">
         {{ step.description }}
       </p>
     </div>
   </template>
 
-  <!-- VUE 2 : Affichage de la vidéo en plein écran -->
+  <!-- VUE 2 : Affichage de la vidéo -->
   <div
     v-else
-    class="fixed inset-0 z-50 bg-white flex items-center justify-center p-4"
+    class="relative w-full h-full min-h-87 md:col-span-3 flex items-center justify-center rounded-xl overflow-hidden p-1"
+    :style="{ backgroundColor: 'var(--dark-blue)' }"
   >
-    <!-- Bouton X au dessus à gauche -->
     <button
       @click="closeVideo"
-      class="absolute top-6 left-6 text-slate-700 hover:text-black font-bold text-3xl cursor-pointer z-20"
+      class="absolute top-4 left-4 text-white hover:text-slate-300 font-bold text-2xl cursor-pointer z-20 bg-slate-900/60 w-9 h-9 rounded-full flex items-center justify-center backdrop-blur-sm"
+      aria-label="Fermer la vidéo"
     >
       ✕
     </button>
@@ -59,7 +64,7 @@
       :loop="activeStep.videos.length === 1"
       @ended="playNextVideo"
       :class="[
-        'w-full h-full max-w-none object-contain rounded-xl cursor-pointer',
+        'w-full h-full max-h-126 object-contain rounded-lg cursor-pointer',
         { 'hide-controls': isPlaying }
       ]"
     >
@@ -169,51 +174,48 @@ const steps = [
   overflow: visible;
 }
 
-/* Texte du badge avec ::after */
 .step-card::after {
   content: "Vidéo démo";
   position: absolute;
   top: 12px;
-  left: 12px;
-  background-color: rgba(59, 63, 73, 0.85); /* Slate 900 sombre */
+  right: 12px;
+  background-color: rgba(15, 23, 42, 0.85);
   color: #ffffff;
   font-size: 0.65rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   padding: 4px 8px;
-  border-radius: 5px;
+  border-radius: 20px;
   opacity: 0;
   transform: translateY(-4px);
   transition: all 0.25s ease-in-out;
-  pointer-events: none;
+  max-width: 100px;
   z-index: 10;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
-/* Petite lueur/point de distinction avec ::before */
 .step-card::before {
   content: "";
   position: absolute;
   inset: 0;
-  border-radius:10px;
-  box-shadow: inset 0 0 0 2px rgba(59, 130, 246, 0.3); /* highlight bleu au survol */
+  border-radius: 0.75rem;
+  box-shadow: inset 0 0 0 2px rgba(59, 130, 246, 0.3);
   opacity: 0;
   transition: opacity 0.25s ease-in-out;
   pointer-events: none;
 }
 
-/* Affichage au survol */
-.step-card:hover::after {
-  opacity: 1;
-  transform: translateY(0);
-}
-
+.step-card:hover::after,
 .step-card:hover::before {
   opacity: 1;
 }
 
-/* Masque les contrôles natifs de la vidéo */
+.step-card:hover::after {
+  transform: translateY(0);
+}
+
+/* Masque les contrôles natifs pendant la lecture */
 video.hide-controls::-webkit-media-controls {
   display: none !important;
 }
