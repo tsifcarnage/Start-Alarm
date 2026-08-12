@@ -22,9 +22,11 @@
 
       <div class="pt-2">
         <button
-          class="cursor-pointer inline-flex items-center gap-2 px-6 py-3.5 bg-(--orange) hover:bg-[#d64d00] text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all"
+          class="flex cursor-pointer items-center justify-center gap-2 px-6 py-3.5 bg-(--orange) hover:bg-[#d64d00] text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all"
         >
-          <span>✏️</span> Créer mon plan de protection &rarr;
+          <span><Pencil :size="20"/></span> 
+          <span>Créer mon plan de protection </span>
+          <MoveRight :size="20" class="pt-1"/>
         </button>
       </div>
 
@@ -33,19 +35,22 @@
           href="tel:0000000000"
           class="inline-flex items-center gap-2 text-xs text-slate-500 hover:text-[#003B71] transition-colors"
         >
-          <span>📞</span> Besoin d'aide ? Parler à un conseiller
+          <span class="text-red-500"><Phone :size="15"/></span> Besoin d'aide ? Parler à un conseiller
         </a>
       </div>
     </div>
 
     <!-- Visuel à droite -->
-    <div class="w-full md:w-1/2 flex justify-center">
+    <div class="w-full md:w-1/2 flex justify-end">
       <img
-        src="/src/assets/img/franceCarte.png"
+        src="/src/assets/img/houseAlarm.png"
         alt="Carte de couverture"
-        class="w-full max-w-sm object-contain"
+        class="w-full max-w-lg object-contain"
       />
     </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { MoveRight, Pencil, Phone } from 'lucide-vue-next';
+
+</script>

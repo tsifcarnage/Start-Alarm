@@ -18,7 +18,7 @@
       
       <!-- Texte de support -->
       <div class="flex items-center text-xs font-semibold text-slate-600">
-        <span class="mr-1.5 text-amber-500 text-sm">💡</span>
+        <span class="mr-1.5 text-amber-500 text-sm"><Lightbulb :size="15" /></span>
         <span>Besoin d'aide pendant votre création ?</span>
         <a href="#" class="ml-1 text-[#00A3E0] hover:underline">
           Nos conseillers peuvent vous accompagner
@@ -30,11 +30,9 @@
         @click="goToPlan"
         class="flex items-center gap-2 px-5 py-2.5 bg-[#F25900] hover:bg-[#d94f00] text-white font-bold text-sm rounded-lg shadow transition-colors"
       >
-        <span>✏️</span>
+        <span><Pencil :size="15"/></span>
         <span>Tester sur mon plan</span>
-        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-        </svg>
+        <MoveRight :size="20" class="pt-1" />
       </button>
 
     </div>
@@ -44,6 +42,7 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import Steps from '../components/Steps.vue';
+import { Lightbulb, MoveRight, Pencil } from 'lucide-vue-next';
 
 const router = useRouter()
 </script>
