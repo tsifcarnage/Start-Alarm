@@ -227,7 +227,7 @@ const steps = [
       "/src/assets/videos/plan/tauxVulnerabilité.mp4",
       "/src/assets/videos/plan/tauxEfficacité.mp4",
     ],
-    title: "Concevez sur plan",
+    title: "Création du plan",
     description:
       "Dessinez votre logement, placez vos capteurs et visualisez la zone couverte.",
   },
@@ -236,7 +236,7 @@ const steps = [
     number: 2,
     src: "/src/assets/img/preparation.png",
     videos: ["/src/assets/videos/preparation/preparationAnimation.mp4"],
-    title: "Préparation",
+    title: "Préparation en atelier",
     description: "Nous préprogrammons tout en atelier avant l'envoi.",
   },
   {
