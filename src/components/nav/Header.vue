@@ -1,3 +1,8 @@
+<script setup lang="ts">
+import { Moon, Sun } from 'lucide-vue-next';
+
+</script>
+
 <template>
   <header class="h-16 bg-white border-b border-slate-200 px-6 flex items-center justify-end gap-4">
     <!-- Notifications -->
@@ -6,10 +11,12 @@
     </button>
 
     <!-- Theme Toggle -->
-    <button class="p-2 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-100 transition-colors">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707"/></svg>
+    <button class="cursor-pointer p-2 text-amber-300 hover:text-amber-500 rounded-full hover:bg-slate-100 transition-colors">
+      <Sun/>
     </button>
-
+    <button class="cursor-pointer p-2 text-purple-300 hover:text-purple-500 rounded-full hover:bg-slate-100 transition-colors">
+      <Moon/>
+    </button>
     <!-- Badge Invité -->
     <div class="flex items-center gap-2 bg-slate-100 px-3 py-1.5 rounded-full text-slate-700 text-sm font-medium">
       <div class="w-6 h-6 rounded-full bg-slate-300 flex items-center justify-center text-xs">
