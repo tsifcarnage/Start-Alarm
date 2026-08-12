@@ -49,8 +49,8 @@
         </div>
       </div>
 
-      <div class="bg-(--colorFocus) text-white dark:text-(--text-primary) py-4 px-8 rounded-full text-center -rotate-10 font-semibold">
-        <span class="text-lg"><span class="text-2xl font-black">100%</span><br>adapté<br> à votre <br>habitation</span>
+      <div class="bg-(--colorFocus) text-white dark:text-(--text-primary) py-6 px-8 rounded-full text-center -rotate-10 font-semibold">
+        <span class="text-lg leading-tight"><span class="text-2xl font-black">100%</span><br>adapté<br> à votre <br>habitation</span>
       </div>
     </section>
 
