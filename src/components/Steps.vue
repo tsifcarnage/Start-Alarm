@@ -5,7 +5,7 @@
       v-for="step in steps"
       :key="step.number"
       @click="selectStep(step)"
-      class="step-card relative bg-slate-50/50 cursor-pointer transition-all duration-300 rounded-xl border-2 p-6 flex flex-col items-center text-center pt-8 hover:scale-105 hover:bg-slate-100"
+      class="step-card relative bg-slate-50/50 dark:bg-(--bg-primary) cursor-pointer transition-all duration-300 rounded-xl border-2 p-6 flex flex-col items-center text-center pt-8 hover:scale-105 hover:bg-slate-100 dark:hover:bg-(--colorFocus)"
       :style="{ borderColor: `var(--${step.color})` }"
     >
       <!-- Pastille numéro -->
@@ -34,7 +34,7 @@
         {{ step.title }}
       </h3>
 
-      <p class="text-xs text-slate-600 leading-relaxed">
+      <p class="text-xs text-slate-600 dark:text-(--text-primary) leading-relaxed">
         {{ step.description }}
       </p>
     </div>

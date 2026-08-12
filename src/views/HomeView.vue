@@ -33,7 +33,7 @@
       <div class="pt-2">
         <a
           href="tel:0000000000"
-          class="inline-flex items-center gap-2 text-xs text-slate-500 hover:text-[#003B71] transition-colors"
+          class="inline-flex items-center gap-2 text-xs text-slate-500 dark:text-(--text-secondary) hover:text-(--light-blue) transition-colors"
         >
           <span class="text-red-500"><Phone :size="15"/></span> Besoin d'aide ? Parler à un conseiller
         </a>

@@ -1,5 +1,5 @@
 <template>
-  <section class="max-w-5xl mx-auto px-4 text-slate-800">
+  <section class="max-w-5xl mx-auto px-4 text-slate-800 ">
     <!-- Titre Principal -->
     <div class="text-center mb-12">
       <h2 class="flex flex-col text-3xl md:text-4xl font-extrabold text-(--dark-blue)">
@@ -17,7 +17,7 @@
     <div class="flex flex-col md:flex-row items-center justify-between gap-4 mt-6">
       
       <!-- Texte de support -->
-      <div class="flex items-center text-xs font-semibold text-slate-600">
+      <div class="flex items-center text-xs font-semibold text-slate-600 dark:text-(--text-secondary)">
         <span class="mr-1.5 text-amber-500 text-sm"><Lightbulb :size="15" /></span>
         <span>Besoin d'aide pendant votre création ?</span>
         <a href="#" class="ml-1 text-[#00A3E0] hover:underline">

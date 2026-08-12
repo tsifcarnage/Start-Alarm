@@ -1,15 +1,52 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap');
 @import "tailwindcss";
-:root{
+
+/* Active le variant `dark:` de Tailwind en se basant sur la classe .dark
+   (portée par <html>) plutôt que sur prefers-color-scheme */
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  /* Couleurs de marque */
   --orange: #FF6E00;
   --dark-blue: #004178;
   --light-blue: #0073AF;
   --color: #45556c;
-    font-family: "Inter", sans-serif;
+  --colorFocus: #45556c;
+  /* Couleurs sémantiques (mode clair) */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f1f5f9;
+  --bg-card: #ffffff;
+  --text-primary: #0f172a;
+  --text-secondary: #45556c;
+  --border-color: #e2e8f0;
+
+  font-family: "Inter", sans-serif;
 }
+
+.dark {
+  /* Couleurs de marque adaptées au fond sombre */
+  --orange: #FF8A3D;
+  --dark-blue: #5CA8FF;
+  --light-blue: #38BDF8;
+  --color:#fcfafa;
+  --colorFocus: #2a4365;
+
+  /* Couleurs sémantiques (mode sombre) */
+  --bg-primary: #0f172a;
+  --bg-secondary: #122139;
+  --bg-card: #1e293b;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --border-color: #334155;
+}
+
 body {
   margin: 0;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
+
 h1,h2{
   font-family: "Mona Sans";
 }
@@ -33,8 +70,19 @@ h1,h2{
   color: #0f172a;
 }
 .nav-item.router-link-exact-active {
-  background-color: var(--color);
+  background-color: var(--colorFocus);
   color: white;
+}
+.dark .nav-item.router-link-exact-active {
+  background-color: var(--colorFocus);
+  color: var(--dark-blue);
+}
+.dark .nav-item {
+  color: #cbd5e1;
+}
+.dark .nav-item:hover {
+  background-color: #1e293b;
+  color: #f1f5f9;
 }
 
 /* Badge 'Vidéo démo' au survol */
@@ -61,7 +109,10 @@ h1,h2{
   max-width: 100px;
   z-index: 10;
 }
-
+.dark .step-card::after{
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
 .step-card::before {
   content: "";
   position: absolute;

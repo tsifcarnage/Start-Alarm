@@ -1,7 +1,7 @@
 <template>
   <aside 
     :class="[
-      'bg-white border-r border-slate-200 flex flex-col justify-between p-4 shadow-sm select-none transition-all duration-300',
+      'bg-(--bg-primary) flex flex-col justify-between border-r border-(--border-color) p-4 shadow-sm select-none transition-all duration-300',
       isCollapsed ? 'w-20' : 'w-64'
     ]"
   >
@@ -18,7 +18,7 @@
       </RouterLink>
 
       <!-- Section Titre Menu + Bouton Flèche -->
-      <div class="flex items-center justify-between mb-4 px-3 text-slate-800 font-bold">
+      <div class="flex items-center justify-between mb-4 px-3 text-(--text-primary) font-bold">
         <span v-if="!isCollapsed" class="text-base">Menu:</span>
         <button 
           @click="isCollapsed = !isCollapsed" 

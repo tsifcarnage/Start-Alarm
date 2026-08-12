@@ -5,7 +5,7 @@ import Header from "./Header.vue";
 </script>
 
 <template>
-  <div class="flex min-h-screen bg-slate-100 font-sans antialiased">
+  <div class="flex min-h-screen bg-(--bg-secondary) font-sans antialiased">
     <!-- Sidebar / Menu à gauche -->
     <Sidebar />
 
@@ -15,7 +15,7 @@ import Header from "./Header.vue";
 
       <main class="flex-1 overflow-y-auto p-6">
         <div
-          class="min-h-full mx-auto flex flex-col md:flex-row items-center justify-between gap-12 bg-white p-8 rounded-xl shadow-sm border border-slate-100"
+          class="min-h-full mx-auto flex flex-col md:flex-row items-center justify-between gap-12 bg-(--bg-primary) p-8 rounded-xl shadow-sm "
         >
           <RouterView />
         </div>
