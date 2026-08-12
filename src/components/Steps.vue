@@ -48,13 +48,19 @@
   >
     <!-- Bouton Fermer (X) -->
     <button
-      type="button"
-      @click="closeVideo"
-      class="absolute top-4 left-4 text-white hover:text-slate-300 font-bold text-2xl cursor-pointer z-30 bg-slate-900/60 w-9 h-9 rounded-full flex items-center justify-center backdrop-blur-sm"
-      aria-label="Fermer la vidéo"
-    >
-      ✕
-    </button>
+  type="button"
+  @click="closeVideo"
+  class="close-button absolute top-4 left-4 border-3 font-bold text-2xl cursor-pointer z-30 w-10 h-10 rounded-full flex items-center justify-center backdrop-blur-sm transition-colors"
+  :style="{
+    '--step-color': `var(--${activeStep.color})`
+  }"
+  aria-label="Fermer la vidéo"
+>
+  ✕
+</button>
+
+
+
 
     <!-- Lecteur Vidéo (Clic = Play / Pause) -->
     <video
@@ -246,6 +252,16 @@ const steps = [
 </script>
 
 <style scoped>
+.close-button {
+  border-color: var(--step-color);
+  color: var(--step-color);
+}
+
+.close-button:hover {
+  background-color: var(--step-color);
+  color: white;
+}
+
 /* Empêche le navigateur de recaler le scroll quand la vidéo
    change de taille/état pendant le chargement */
 .step-card,
