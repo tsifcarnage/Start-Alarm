@@ -15,7 +15,7 @@ import Header from "./Header.vue";
 
       <main class="flex-1 overflow-y-auto p-6">
         <div
-          class="min-h-full mx-auto flex flex-col md:flex-row items-center justify-between gap-12 bg-(--bg-primary) p-8 rounded-xl shadow-sm "
+          class="min-[1408px]:flex-row min-h-full mx-auto flex flex-col items-center justify-between gap-12 bg-(--bg-primary) p-8 rounded-xl shadow-sm "
         >
           <RouterView />
         </div>
