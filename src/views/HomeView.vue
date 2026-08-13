@@ -74,11 +74,11 @@
   </div>
 
   <!-- Visuel à droite -->
-  <div v-if="!openSolution" class="flex flex-col w-full md:w-1/2 justify-end">
+  <div v-if="!openSolution" class="flex flex-col w-full justify-end">
     <img
       src="/src/assets/img/houseAlarm.png"
       alt="Carte de couverture"
-      class="w-full max-w-lg object-contain self-center"
+      class="w-full max-w-[90%] object-contain self-center"
     />
     <button
       @click="openSolution = !openSolution"
@@ -90,18 +90,18 @@
   </div>
 
   <!-- Section Avantages interactive -->
-  <div v-else class="flex flex-col w-full md:w-1/2">
+  <div v-else class="flex flex-col w-full ">
     <h3 class="text-2xl font-bold text-(--dark-blue) pb-2 text-center">
       Concevez vous-même votre système d'alarme en ligne, nous vous guidons à
       chaque étape !
     </h3>
 
-    <p class="text-xs text-center text-slate-500 dark:text-slate-400 mb-3 italic">
-      💡 Cliquez sur un avantage pour en savoir plus
+    <p class="flex justify-center text-xs text-center text-slate-500 dark:text-slate-400 mb-3 italic">
+      <Lightbulb :size="15" class="text-yellow-300 mt-px"/><span>Cliquez sur un avantage pour en savoir plus</span>
     </p>
 
     <img
-      class="w-full max-w-xs object-contain self-center mb-2"
+      class="w-full max-w-md object-contain self-center mb-2"
       src="/src/assets/img/avantageImg1.png"
       alt="Avantages"
     />
@@ -151,7 +151,7 @@
 </template>
 
 <script setup>
-import { MoveLeft, MoveRight, Pencil, Phone, ScanEye, ChevronRight } from "lucide-vue-next";
+import { MoveLeft, MoveRight, Pencil, Phone, ScanEye, ChevronRight, Lightbulb } from "lucide-vue-next";
 import { ref, onMounted, onUnmounted } from "vue";
 import AdvantageDetail from "../components/AdvantageDetail.vue";
 // N'oublie pas d'ajuster le chemin d'import selon ton projet
@@ -165,7 +165,7 @@ const advantages = [
   "100% personnalisé",
   "Sans abonnement",
   "Livré prêt à fonctionner",
-  "Des experts près de chez vous"
+  "Des experts près de chez vous7"
 ];
 
 const activeIndex = ref(0);
