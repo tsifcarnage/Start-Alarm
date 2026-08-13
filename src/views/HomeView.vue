@@ -22,55 +22,54 @@
       <span class="self-center"> en quelques clics.</span>
     </p>
 
-    <!-- Vue PAR DÉFAUT (Texte intro + Boutons CTA) -->
-    <template v-if="!selectedAdvantage">
-      <p class="text-(--color) text-sm md:text-base leading-relaxed">
-        Dessinez votre plan, testez votre couverture en direct et recevez votre
-        matériel prêt à poser.<br />
-        Programmé par nos experts, installé facilement par vous-même !
-      </p>
+    <!-- ZONE DE TEXTE DYNAMIQUE (Remplace UNIQUEMENT le texte de présentation) -->
+    <p v-if="!selectedAdvantage" class="text-(--color) text-sm md:text-base leading-relaxed">
+      Dessinez votre plan, testez votre couverture en direct et recevez votre
+      matériel prêt à poser.<br />
+      Programmé par nos experts, installé facilement par vous-même !
+    </p>
 
-      <section class="flex items-center justify-between flex-wrap">
-        <div class="flex flex-col gap-2">
-          <div class="pt-2">
-            <button
-              class="flex cursor-pointer items-center justify-center gap-2 px-6 py-3.5 bg-(--orange) hover:bg-[#d64d00] text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all"
-            >
-              <span><Pencil :size="20" /></span>
-              <span>Créer mon plan de protection </span>
-              <MoveRight :size="20" class="pt-1" />
-            </button>
-          </div>
-
-          <div class="pt-2">
-            <a
-              href="tel:0000000000"
-              class="inline-flex items-center gap-2 text-xs text-slate-500 dark:text-(--text-secondary) hover:text-(--light-blue) transition-colors"
-            >
-              <span class="text-red-500"><Phone :size="15" /></span> Besoin d'aide
-              ? Parler à un conseiller
-            </a>
-          </div>
-        </div>
-
-        <!-- Badge 100% adapté -->
-        <div
-          class="bg-(--circleColor) dark:bg-(--colorFocus) text-(--dark-blue) dark:text-(--text-primary) py-6 px-8 rounded-full text-center -rotate-10 font-bold font-['Mona_Sans']"
-        >
-          <span class="text-lg leading-tight"
-            ><span class="text-3xl font-black">100%</span><br />adapté<br />
-            à votre <br />habitation</span
-          >
-        </div>
-      </section>
-    </template>
-
-    <!-- Nouveau Composant DÉTAIL -->
+    <!-- Composant DÉTAIL (Affiché à la place du texte si un avantage est cliqué) -->
     <AdvantageDetail
       v-else
       :title="selectedAdvantage"
       @close="selectedAdvantage = null"
     />
+
+    <!-- LES BOUTONS ET LE BADGE RESTENT TOUJOURS VISIBLES -->
+    <section class="flex items-center justify-between flex-wrap">
+      <div class="flex flex-col gap-2">
+        <div class="pt-2">
+          <button
+            class="flex cursor-pointer items-center justify-center gap-2 px-6 py-3.5 bg-(--orange) hover:bg-[#d64d00] text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all"
+          >
+            <span><Pencil :size="20" /></span>
+            <span>Créer mon plan de protection </span>
+            <MoveRight :size="20" class="pt-1" />
+          </button>
+        </div>
+
+        <div class="pt-2">
+          <a
+            href="tel:0000000000"
+            class="inline-flex items-center gap-2 text-xs text-slate-500 dark:text-(--text-secondary) hover:text-(--light-blue) transition-colors"
+          >
+            <span class="text-red-500"><Phone :size="15" /></span> Besoin d'aide
+            ? Parler à un conseiller
+          </a>
+        </div>
+      </div>
+
+      <!-- Badge 100% adapté -->
+      <div
+        class="bg-(--circleColor) dark:bg-(--colorFocus) text-(--dark-blue) dark:text-(--text-primary) py-6 px-8 rounded-full text-center -rotate-10 font-bold font-['Mona_Sans']"
+      >
+        <span class="text-lg leading-tight"
+          ><span class="text-3xl font-black">100%</span><br />adapté<br />
+          à votre <br />habitation</span
+        >
+      </div>
+    </section>
   </div>
 
   <!-- Visuel à droite -->
@@ -90,14 +89,15 @@
   </div>
 
   <!-- Section Avantages interactive -->
-  <div v-else class="flex flex-col w-full ">
+  <div v-else class="flex flex-col w-full">
     <h3 class="text-2xl font-bold text-(--dark-blue) pb-2 text-center">
       Concevez vous-même votre système d'alarme en ligne, nous vous guidons à
       chaque étape !
     </h3>
 
     <p class="flex justify-center text-xs text-center text-slate-500 dark:text-slate-400 mb-3 italic">
-      <Lightbulb :size="15" class="text-yellow-300 mt-px"/><span>Cliquez sur un avantage pour en savoir plus</span>
+      <Lightbulb :size="15" class="text-yellow-300 mt-px"/>
+      <span>Cliquez sur un avantage pour en savoir plus</span>
     </p>
 
     <img
@@ -154,7 +154,6 @@
 import { MoveLeft, MoveRight, Pencil, Phone, ScanEye, ChevronRight, Lightbulb } from "lucide-vue-next";
 import { ref, onMounted, onUnmounted } from "vue";
 import AdvantageDetail from "../components/AdvantageDetail.vue";
-// N'oublie pas d'ajuster le chemin d'import selon ton projet
 
 const openSolution = ref(false);
 const selectedAdvantage = ref(null);
@@ -165,7 +164,7 @@ const advantages = [
   "100% personnalisé",
   "Sans abonnement",
   "Livré prêt à fonctionner",
-  "Des experts près de chez vous7"
+  "Des experts près de chez vous",
 ];
 
 const activeIndex = ref(0);
