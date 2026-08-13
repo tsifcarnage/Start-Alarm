@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { Moon, Sun } from 'lucide-vue-next';
+import { CircleUser, Moon, Sun } from 'lucide-vue-next';
 
 const isDark = ref(false);
 
@@ -42,9 +42,7 @@ onMounted(() => {
 
     <!-- Badge Invité -->
     <div class="flex items-center gap-2 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-full text-slate-700 dark:text-slate-200 text-sm font-medium transition-colors">
-      <div class="w-6 h-6 rounded-full bg-slate-300 dark:bg-slate-600 flex items-center justify-center text-xs">
-        👤
-      </div>
+      <CircleUser />
       <span>Invité</span>
     </div>
   </header>
