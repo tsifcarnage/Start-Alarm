@@ -28,6 +28,7 @@
       matériel prêt à poser.<br />
       Programmé par nos experts, installé facilement par vous-même !
     </p>
+
     <section class="flex items-center justify-between flex-wrap">
       <div class="flex flex-col gap-2">
         <div class="pt-2">
@@ -50,7 +51,8 @@
           </a>
         </div>
       </div>
-      <!-- circle adaptation -->
+
+      <!-- Badge 100% adapté -->
       <div
         class="bg-(--circleColor) dark:bg-(--colorFocus) text-(--dark-blue) dark:text-(--text-primary) py-6 px-8 rounded-full text-center -rotate-10 font-bold font-['Mona_Sans']"
       >
@@ -70,43 +72,113 @@
       class="w-full max-w-lg object-contain self-center"
     />
     <button
-    @click="openSolution = !openSolution"
+      @click="openSolution = !openSolution"
       class="cursor-pointer flex gap-1 self-center border-2 border-(--dark-blue) text-(--dark-blue) dark:text-(--text-primary) font-semibold py-4 px-6 rounded-md animate-button-pulse hover:bg-(--dark-blue) hover:text-(--bg-primary)"
     >
       <span>Avantages de notre solution</span>
-      <ScanEye class="mt-0.5"/>
+      <ScanEye class="mt-0.5" />
     </button>
   </div>
-  <div v-else class="flex flex-col">
-    <h3 class="text-2xl font-bold text-(--dark-blue) pb-4 text-center">Concevez vous-même votre système d'alarme en ligne, nous vous guidons à chaque étape !</h3>
-    <img class="w-full max-w-md object-contain self-center " src="/src/assets/img/avantageImg1.png" alt="">
-    <ul class="text-xl max-w-100 m-auto pt-6 text-(--light-blue)">
-      <li><i>‣</i> Configuration gratuite</li>
-      <li><i>‣</i> Testez avant d'acheter</li>
-      <li><i>‣</i> 100% personnalisé</li>
-      <li><i>‣</i> Sans abonnement</li>
-      <li><i>‣</i> Livré prêt à fonctionner</li>
-    </ul>
+
+  <!-- Section Avantages interactive -->
+  <div v-else class="flex flex-col w-full md:w-1/2">
+    <h3 class="text-2xl font-bold text-(--dark-blue) pb-2 text-center">
+      Concevez vous-même votre système d'alarme en ligne, nous vous guidons à
+      chaque étape !
+    </h3>
+
+    <p class="text-xs text-center text-slate-500 dark:text-slate-400 mb-3 italic">
+      💡 Cliquez sur un avantage pour en savoir plus
+    </p>
+
+    <img
+      class="w-full max-w-xs object-contain self-center mb-2"
+      src="/src/assets/img/avantageImg1.png"
+      alt="Avantages"
+    />
+
+    <!-- Liste d'Avantages Interactifs -->
+    <div class="flex flex-col gap-2 p-3 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-800">
+      <button
+        v-for="(text, index) in advantages"
+        :key="text"
+        @click="openModal(text)"
+        class="group relative flex items-center justify-between p-3 rounded-lg border-2 transition-all duration-300 text-left cursor-pointer overflow-hidden"
+        :class="[
+          activeIndex === index
+            ? 'border-(--orange) bg-orange-50 dark:bg-orange-950/20 shadow-md scale-[1.02]'
+            : 'border-transparent bg-white dark:bg-slate-800/80 hover:border-(--light-blue) hover:shadow-sm hover:translate-x-1'
+        ]"
+      >
+        <div class="flex items-center gap-3">
+          <!-- Flèche guidante animée -->
+          <span 
+            class="transition-opacity duration-300"
+            :class="activeIndex === index ? 'opacity-100 text-(--orange) animate-bounce-horizontal' : 'opacity-30 group-hover:opacity-100 text-slate-400'"
+          >
+            <ChevronRight :size="22" />
+          </span>
+
+          <span class="font-semibold text-slate-800 dark:text-slate-100 group-hover:text-(--orange) transition-colors">
+            {{ text }}
+          </span>
+        </div>
+
+        <!-- Tag discret "Voir +" -->
+        <span class="text-xs font-bold text-(--orange) opacity-0 group-hover:opacity-100 transition-opacity bg-orange-100 dark:bg-orange-900/40 px-2 py-1 rounded">
+          En savoir +
+        </span>
+      </button>
+    </div>
+
     <button
-    @click="openSolution = !openSolution"
-      class="cursor-pointer flex gap-1 self-center border-2 border-(--dark-blue) text-(--dark-blue) dark:text-(--text-primary) font-semibold py-4 px-6 rounded-md animate-button-pulse hover:bg-(--dark-blue) hover:text-(--bg-primary)"
+      @click="openSolution = !openSolution"
+      class="cursor-pointer flex items-center gap-1 self-end mt-4 border-2 border-(--dark-blue) text-(--dark-blue) dark:text-(--text-primary) py-1.5 px-3 rounded-md hover:bg-(--dark-blue) hover:text-(--bg-primary) transition-colors text-sm font-semibold"
     >
-      <span>Illustration des caméras</span>
-      <ScanEye class="mt-0.5"/>
+      <MoveLeft :size="16" />
+      <span>Retour</span>
     </button>
   </div>
 </template>
 
 <script setup>
-import { MoveRight, Pencil, Phone, ScanEye } from "lucide-vue-next";
-import { ref } from "vue";
-const openSolution = ref(false)
+import { MoveLeft, MoveRight, Pencil, Phone, ScanEye, ChevronRight } from "lucide-vue-next";
+import { ref, onMounted, onUnmounted } from "vue";
+
+const openSolution = ref(false);
+
+const advantages = [
+  "Configuration gratuite",
+  "Testez avant d'acheter",
+  "100% personnalisé",
+  "Sans abonnement",
+  "Livré prêt à fonctionner",
+  "Un expert près de chez vous"
+];
+
+// Gestion de la flèche descendante animée (index de la liste)
+const activeIndex = ref(0);
+let timer = null;
+
+onMounted(() => {
+  // La flèche descend d'un élément toutes me 1.8 secondes
+  timer = setInterval(() => {
+    activeIndex.value = (activeIndex.value + 1) % advantages.length;
+  }, 1800);
+});
+
+onUnmounted(() => {
+  if (timer) clearInterval(timer);
+});
+
+// Fonction d'ouverture de la future popup
+const openModal = (item) => {
+  console.log("Ouvrir la popup pour :", item);
+  // Vos futures instructions de modal ici
+};
 </script>
 
 <style scoped>
-i{
-  color: red;
-}
 .animate-marquee {
   animation: marquee 12s linear infinite;
 }
@@ -115,21 +187,35 @@ i{
   from {
     transform: translateX(100%);
   }
-
   to {
     transform: translateX(-100%);
   }
 }
+
 @keyframes button-pulse {
   0%, 100% {
     transform: scale(1);
   }
   50% {
-    transform: scale(1.10);
+    transform: scale(1.05);
   }
 }
 
 .animate-button-pulse {
   animation: button-pulse 1.8s ease-in-out infinite;
+}
+
+/* Animation personnalisée pour la flèche indicative */
+@keyframes bounce-horizontal {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+}
+
+.animate-bounce-horizontal {
+  animation: bounce-horizontal 0.8s infinite;
 }
 </style>
