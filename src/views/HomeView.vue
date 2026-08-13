@@ -1,5 +1,4 @@
 <template>
-  <!-- Contenu texte et CTA à gauche -->
   <div class="flex-1 space-y-6 w-full">
     <div
       class="flex mb-4 w-full overflow-hidden bg-(--colorFocus) min-[1408px]:flex-col"
@@ -23,45 +22,55 @@
       <span class="self-center"> en quelques clics.</span>
     </p>
 
-    <p class="text-(--color) text-sm md:text-base leading-relaxed">
-      Dessinez votre plan, testez votre couverture en direct et recevez votre
-      matériel prêt à poser.<br />
-      Programmé par nos experts, installé facilement par vous-même !
-    </p>
+    <!-- Vue PAR DÉFAUT (Texte intro + Boutons CTA) -->
+    <template v-if="!selectedAdvantage">
+      <p class="text-(--color) text-sm md:text-base leading-relaxed">
+        Dessinez votre plan, testez votre couverture en direct et recevez votre
+        matériel prêt à poser.<br />
+        Programmé par nos experts, installé facilement par vous-même !
+      </p>
 
-    <section class="flex items-center justify-between flex-wrap">
-      <div class="flex flex-col gap-2">
-        <div class="pt-2">
-          <button
-            class="flex cursor-pointer items-center justify-center gap-2 px-6 py-3.5 bg-(--orange) hover:bg-[#d64d00] text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all"
-          >
-            <span><Pencil :size="20" /></span>
-            <span>Créer mon plan de protection </span>
-            <MoveRight :size="20" class="pt-1" />
-          </button>
+      <section class="flex items-center justify-between flex-wrap">
+        <div class="flex flex-col gap-2">
+          <div class="pt-2">
+            <button
+              class="flex cursor-pointer items-center justify-center gap-2 px-6 py-3.5 bg-(--orange) hover:bg-[#d64d00] text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all"
+            >
+              <span><Pencil :size="20" /></span>
+              <span>Créer mon plan de protection </span>
+              <MoveRight :size="20" class="pt-1" />
+            </button>
+          </div>
+
+          <div class="pt-2">
+            <a
+              href="tel:0000000000"
+              class="inline-flex items-center gap-2 text-xs text-slate-500 dark:text-(--text-secondary) hover:text-(--light-blue) transition-colors"
+            >
+              <span class="text-red-500"><Phone :size="15" /></span> Besoin d'aide
+              ? Parler à un conseiller
+            </a>
+          </div>
         </div>
 
-        <div class="pt-2">
-          <a
-            href="tel:0000000000"
-            class="inline-flex items-center gap-2 text-xs text-slate-500 dark:text-(--text-secondary) hover:text-(--light-blue) transition-colors"
-          >
-            <span class="text-red-500"><Phone :size="15" /></span> Besoin d'aide
-            ? Parler à un conseiller
-          </a>
-        </div>
-      </div>
-
-      <!-- Badge 100% adapté -->
-      <div
-        class="bg-(--circleColor) dark:bg-(--colorFocus) text-(--dark-blue) dark:text-(--text-primary) py-6 px-8 rounded-full text-center -rotate-10 font-bold font-['Mona_Sans']"
-      >
-        <span class="text-lg leading-tight"
-          ><span class="text-3xl font-black">100%</span><br />adapté<br />
-          à votre <br />habitation</span
+        <!-- Badge 100% adapté -->
+        <div
+          class="bg-(--circleColor) dark:bg-(--colorFocus) text-(--dark-blue) dark:text-(--text-primary) py-6 px-8 rounded-full text-center -rotate-10 font-bold font-['Mona_Sans']"
         >
-      </div>
-    </section>
+          <span class="text-lg leading-tight"
+            ><span class="text-3xl font-black">100%</span><br />adapté<br />
+            à votre <br />habitation</span
+          >
+        </div>
+      </section>
+    </template>
+
+    <!-- Nouveau Composant DÉTAIL -->
+    <AdvantageDetail
+      v-else
+      :title="selectedAdvantage"
+      @close="selectedAdvantage = null"
+    />
   </div>
 
   <!-- Visuel à droite -->
@@ -102,19 +111,20 @@
       <button
         v-for="(text, index) in advantages"
         :key="text"
-        @click="openModal(text)"
+        @click="selectAdvantage(text)"
         class="group relative flex items-center justify-between p-3 rounded-lg border-2 transition-all duration-300 text-left cursor-pointer overflow-hidden"
         :class="[
-          activeIndex === index
+          selectedAdvantage === text
+            ? 'border-(--orange) bg-orange-100 dark:bg-orange-950/40 shadow-md scale-[1.02]'
+            : activeIndex === index && !selectedAdvantage
             ? 'border-(--orange) bg-orange-50 dark:bg-orange-950/20 shadow-md scale-[1.02]'
             : 'border-transparent bg-white dark:bg-slate-800/80 hover:border-(--light-blue) hover:shadow-sm hover:translate-x-1'
         ]"
       >
         <div class="flex items-center gap-3">
-          <!-- Flèche guidante animée -->
           <span 
             class="transition-opacity duration-300"
-            :class="activeIndex === index ? 'opacity-100 text-(--orange) animate-bounce-horizontal' : 'opacity-30 group-hover:opacity-100 text-slate-400'"
+            :class="(activeIndex === index && !selectedAdvantage) || selectedAdvantage === text ? 'opacity-100 text-(--orange) animate-bounce-horizontal' : 'opacity-30 group-hover:opacity-100 text-slate-400'"
           >
             <ChevronRight :size="22" />
           </span>
@@ -124,7 +134,6 @@
           </span>
         </div>
 
-        <!-- Tag discret "Voir +" -->
         <span class="text-xs font-bold text-(--orange) opacity-0 group-hover:opacity-100 transition-opacity bg-orange-100 dark:bg-orange-900/40 px-2 py-1 rounded">
           En savoir +
         </span>
@@ -144,8 +153,11 @@
 <script setup>
 import { MoveLeft, MoveRight, Pencil, Phone, ScanEye, ChevronRight } from "lucide-vue-next";
 import { ref, onMounted, onUnmounted } from "vue";
+import AdvantageDetail from "../components/AdvantageDetail.vue";
+// N'oublie pas d'ajuster le chemin d'import selon ton projet
 
 const openSolution = ref(false);
+const selectedAdvantage = ref(null);
 
 const advantages = [
   "Configuration gratuite",
@@ -153,17 +165,17 @@ const advantages = [
   "100% personnalisé",
   "Sans abonnement",
   "Livré prêt à fonctionner",
-  "Un expert près de chez vous"
+  "Des experts près de chez vous"
 ];
 
-// Gestion de la flèche descendante animée (index de la liste)
 const activeIndex = ref(0);
 let timer = null;
 
 onMounted(() => {
-  // La flèche descend d'un élément toutes me 1.8 secondes
   timer = setInterval(() => {
-    activeIndex.value = (activeIndex.value + 1) % advantages.length;
+    if (!selectedAdvantage.value) {
+      activeIndex.value = (activeIndex.value + 1) % advantages.length;
+    }
   }, 1800);
 });
 
@@ -171,10 +183,8 @@ onUnmounted(() => {
   if (timer) clearInterval(timer);
 });
 
-// Fonction d'ouverture de la future popup
-const openModal = (item) => {
-  console.log("Ouvrir la popup pour :", item);
-  // Vos futures instructions de modal ici
+const selectAdvantage = (title) => {
+  selectedAdvantage.value = title;
 };
 </script>
 
@@ -205,7 +215,6 @@ const openModal = (item) => {
   animation: button-pulse 1.8s ease-in-out infinite;
 }
 
-/* Animation personnalisée pour la flèche indicative */
 @keyframes bounce-horizontal {
   0%, 100% {
     transform: translateX(0);
