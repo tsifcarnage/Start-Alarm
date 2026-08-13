@@ -77,7 +77,7 @@
     <img
       src="/src/assets/img/houseAlarm.png"
       alt="Carte de couverture"
-      class="w-full max-w-[90%] object-contain self-center"
+      class="w-full max-w-[85%] object-contain self-center"
     />
     <button
       @click="openSolution = !openSolution"
