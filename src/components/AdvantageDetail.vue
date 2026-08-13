@@ -62,7 +62,7 @@ const descriptions = {
   "Livré prêt à fonctionner":
     "Chez START-ALARM, vous ne recevez pas un colis avec du matériel inerte !\n\n Tous les éléments sont configurés et programmés en fonction de votre habitation et de vos choix.\n\n  → Vous n'avez qu'à le poser.(un simple tournevis suffit)\n → Le matériel est prêt à facturé.",
   "Des experts près de chez vous":
-    "Chez START-ALARM, fini d'entendre 'Ramenez le production au magasin ' ou 'Nous redonner le matériel'.\n\n START-ALARM c'est un réseau d'installateur experts indépendants dans tous le départements de France.\n\n IL connait votre système, car c'est lui qui à programmer votre alarme, avec une assurance d'avoir un expert en cas de besoin d'assistance.",
+    "Avec START-ALARM, fini les « Ramenez le matériel au magasin » ou « Nous allons récupérer le matériel » !\n\n START-ALARM, c'est un réseau d'installateurs experts indépendants, présents partout en France.\n\n Votre installateur connaît parfaitement votre système, puisqu'il a programmé votre alarme. En cas de besoin, vous bénéficiez ainsi de l'assistance d'un expert qui connaît votre installation.",
 };
 
 // Récupère la description associée ou un texte par défaut si non trouvée

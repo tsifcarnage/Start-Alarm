@@ -17,7 +17,7 @@
       <span class="self-center"> Installez...</span>
     </h1>
 
-    <p class="flex flex-col text-2xl md:text-3xl font-bold text-(--dark-blue)">
+    <p class="flex flex-col text-2xl md:text-3xl font-bold text-(--dark-blue) font-[Mona_Sans]">
       <span>...Votre système d'alarme vous-même</span>
       <span class="self-center"> en quelques clics.</span>
     </p>
