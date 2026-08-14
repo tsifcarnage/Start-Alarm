@@ -58,10 +58,6 @@
 >
   ✕
 </button>
-
-
-
-
     <!-- Lecteur Vidéo (Clic = Play / Pause) -->
     <video
       ref="videoRef"

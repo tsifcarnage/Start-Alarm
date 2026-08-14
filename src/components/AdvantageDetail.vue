@@ -22,7 +22,7 @@
     >
       {{ advantageDescription }}
     </p>
-
+    <img :src="advantageImage" :alt="title" class=" rounded-md">
     <!-- Bouton Retour -->
     <button
       @click="emit('close')"
@@ -65,6 +65,19 @@ const descriptions = {
     "Avec START-ALARM, fini les « Ramenez le matériel au magasin » ou « Nous allons récupérer le matériel » !\n\n START-ALARM, c'est un réseau d'installateurs experts indépendants, présents partout en France.\n\n Votre installateur connaît parfaitement votre système, puisqu'il a programmé votre alarme. En cas de besoin, vous bénéficiez ainsi de l'assistance d'un expert qui connaît votre installation.",
 };
 
+//Dictionnaire d'image pour chaque
+const images = {
+  "Configuration gratuite": "/src/assets/img/detailAdv/creationPlan.png",
+  "Testez avant d'acheter": "/src/assets/img/detailAdv/tauxEfficacité.png",
+  "100% personnalisé": "/images/personnalise.jpg",
+  "Sans abonnement": "/images/sans-abonnement.jpg",
+  "Livré prêt à fonctionner": "/images/livre-pret-a-fonctionner.jpg",
+  "Des experts près de chez vous": "/images/experts-pres-de-chez-vous.jpg",
+}
+
+const advantageImage = computed(() => {
+  return images[props.title] || "/src/assets/img/detailAdv/default.png";
+});
 // Récupère la description associée ou un texte par défaut si non trouvée
 const advantageDescription = computed(() => {
   return (
