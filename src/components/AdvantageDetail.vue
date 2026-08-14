@@ -56,7 +56,7 @@ const descriptions = {
   "Testez avant d'acheter":
     "Fini d'acheter sans savoir à l'avance. Avec START-ALARM, notre configuration vous préconise l'installation idéale et vous donne ses taux d'éfficacité.",
   "100% personnalisé":
-    "Fini d'acheter un 'PACK STANDARD', car chaque habitation est différente et a besoin d'un système cohérente par rapport à son niveau de vulnérabilité.",
+    "Fini d'acheter un 'PACK STANDARD', car chaque habitation est différente et a besoin d'un système cohérent par rapport à son niveau de vulnérabilité.",
   "Sans abonnement":
     "Chez START-ALARM, on n'impose pas le service 'Télésurveillance'. Vous y surveillez que si vous le désirez. Fini de payer des services dont vous n'avez pas besoin",
   "Livré prêt à fonctionner":
@@ -69,7 +69,7 @@ const descriptions = {
 const images = {
   "Configuration gratuite": "/src/assets/img/detailAdv/creationPlan.png",
   "Testez avant d'acheter": "/src/assets/img/detailAdv/tauxEfficacité.png",
-  "100% personnalisé": "/images/personnalise.jpg",
+  "100% personnalisé": "/src/assets/img/detailAdv/personnalisation.png",
   "Sans abonnement": "/images/sans-abonnement.jpg",
   "Livré prêt à fonctionner": "/images/livre-pret-a-fonctionner.jpg",
   "Des experts près de chez vous": "/images/experts-pres-de-chez-vous.jpg",
