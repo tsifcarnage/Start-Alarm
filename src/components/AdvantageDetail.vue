@@ -36,11 +36,15 @@
 
       <!-- POINTEUR PERPIGNAN -->
       <div
-        class="group absolute left-[49%] top-[87%] -translate-x-1/2 -translate-y-1/2 cursor-pointer z-30"
+        ref="pointerRef"
+        @mouseenter="isHovered = true"
+        @mouseleave="isHovered = false"
+        @click.stop="togglePin"
+        class="absolute left-[49%] top-[86%] -translate-x-1/2 -translate-y-1/2 cursor-pointer z-30"
       >
         <!-- SVG Pointer clignotant Orange/Rouge -->
         <svg
-          class="w-8 h-8 pulse-orange-red drop-shadow-lg"
+          class="w-10 pulse-orange-red drop-shadow-lg"
           viewBox="0 0 24 24"
           fill="currentColor"
         >
@@ -49,16 +53,19 @@
           />
         </svg>
 
-        <!-- POPUP LOREM IPSUM AU SURVOL -->
+        <!-- POPUP : visible au hover OU si figé au clic -->
         <div
-          class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:flex flex-col w-48 p-3 bg-white dark:bg-slate-800 rounded-lg shadow-2xl border border-slate-200 dark:border-slate-700 text-xs text-slate-700 dark:text-slate-200 z-40 pointer-events-none"
+          v-if="isHovered || isPinned"
+          class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 flex flex-col w-48 p-3 bg-white dark:bg-(--bg-secondary) rounded-lg shadow-2xl border border-slate-200 dark:border-slate-700 text-xs text-slate-700 dark:text-slate-200 z-40 pointer-events-none animate-fade-in"
         >
-          <div class="font-bold text-(--orange) border-b border-slate-200 dark:border-slate-700 pb-1 mb-1.5">
-            Perpignan
+          <div class="font-bold text-xl text-(--orange) border-b border-slate-200 dark:border-slate-700 pb-1 mb-1.5">
+            Acti-Protec
           </div>
-          <p class="text-slate-600 dark:text-slate-300">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          </p>
+          <ul class="text-slate-600 dark:text-slate-300">
+            <li>4050 Avenue Julien Panchot</li>
+            <li>66000 Perpignan</li>
+            <li>04-68-55-56-25</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -84,7 +91,7 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 import { MoveLeft, X } from "lucide-vue-next";
 
 const props = defineProps({
@@ -95,6 +102,29 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["close"]);
+
+// --- GESTION DU HOVER ET DU FOCUS PAR CLIC ---
+const isHovered = ref(false);
+const isPinned = ref(false);
+const pointerRef = ref(null);
+
+const togglePin = () => {
+  isPinned.value = !isPinned.value;
+};
+
+const handleClickOutside = (event) => {
+  if (pointerRef.value && !pointerRef.value.contains(event.target)) {
+    isPinned.value = false;
+  }
+};
+
+onMounted(() => {
+  document.addEventListener("click", handleClickOutside);
+});
+
+onUnmounted(() => {
+  document.removeEventListener("click", handleClickOutside);
+});
 
 const descriptions = {
   "Configuration gratuite":
@@ -163,6 +193,6 @@ const advantageDescription = computed(() => {
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.3s ease-out forwards;
+  animation: fadeIn 0.2s ease-out forwards;
 }
 </style>
