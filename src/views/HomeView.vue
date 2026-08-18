@@ -91,7 +91,7 @@
   <!-- Section Avantages interactive -->
   <div v-else class="flex flex-col w-full">
     <h3 class="text-2xl font-bold text-(--dark-blue) pb-2 text-center">
-      Concevez vous-même votre système d'alarme en ligne, nous vous guidons à
+      Concevez votre alarme en ligne, nous vous guidons à
       chaque étape !
     </h3>
 

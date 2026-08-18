@@ -84,8 +84,8 @@ const media = {
   "Testez avant d'acheter": "/src/assets/img/detailAdv/tauxEfficacité.png",
   "100% personnalisé": "/src/assets/img/detailAdv/personnalisation.png",
   "Sans abonnement": "/src/assets/img/detailAdv/sansAbo.mp4", //Vidéo ici
-  "Livré prêt à fonctionner": "/images/livre-pret-a-fonctionner.jpg",
-  "Des experts près de chez vous": "/images/experts-pres-de-chez-vous.jpg",
+  "Livré prêt à fonctionner": "/src/assets/img/detailAdv/livraison.png",
+  "Des experts près de chez vous": "/src/assets/img/detailAdv/carteFrance.png",
 };
 
 // Récupère l'URL du média (image ou vidéo)
