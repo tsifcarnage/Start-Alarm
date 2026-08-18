@@ -94,7 +94,7 @@
         >
           <Lightbulb :size="48" class="text-slate-300 dark:text-slate-600" />
           <p class="text-base font-medium">
-            Sélectionnez un avantage sur la gauche pour consulter les détails.
+            Sélectionnez un avantage pour consulter les détails.
           </p>
         </div>
       </div>
