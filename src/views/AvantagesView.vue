@@ -52,8 +52,14 @@
                 <ChevronRight :size="22" />
               </span>
 
+              <!-- Texte : Passe en orange si le bouton est sélectionné OU survolé -->
               <span
-                class="font-semibold text-slate-800 dark:text-slate-100 group-hover:text-(--orange) transition-colors"
+                class="font-semibold transition-colors"
+                :class="[
+                  selectedAdvantage === text
+                    ? 'text-(--orange) font-bold'
+                    : 'text-slate-800 dark:text-slate-100 group-hover:text-(--orange)',
+                ]"
               >
                 {{ text }}
               </span>
