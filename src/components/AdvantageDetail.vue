@@ -30,13 +30,13 @@
       autoplay
       muted
       loop
-      class="w-full rounded-md p-3 bg-black object-cover"
+      class="w-full rounded-md  object-cover"
     ></video>
     <img
       v-else
       :src="advantageMedia"
       :alt="title"
-      class="w-full rounded-md max-h-80 object-cover"
+      class="w-full rounded-md object-cover"
     />
 
     <!-- Bouton Retour -->
