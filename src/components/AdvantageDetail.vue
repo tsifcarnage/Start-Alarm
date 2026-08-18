@@ -22,7 +22,23 @@
     >
       {{ advantageDescription }}
     </p>
-    <img :src="advantageImage" :alt="title" class=" rounded-md">
+
+    <!-- Média dynamique : Vidéo si le fichier est un .mp4, sinon Image -->
+    <video
+      v-if="isVideo"
+      :src="advantageMedia"
+      autoplay
+      muted
+      loop
+      class="w-full rounded-md p-3 bg-black object-cover"
+    ></video>
+    <img
+      v-else
+      :src="advantageMedia"
+      :alt="title"
+      class="w-full rounded-md max-h-80 object-cover"
+    />
+
     <!-- Bouton Retour -->
     <button
       @click="emit('close')"
@@ -38,7 +54,6 @@
 import { computed } from "vue";
 import { MoveLeft, X } from "lucide-vue-next";
 
-// Propriétés
 const props = defineProps({
   title: {
     type: String,
@@ -46,10 +61,8 @@ const props = defineProps({
   },
 });
 
-// Événement pour fermer
 const emit = defineEmits(["close"]);
 
-// Dictionnaire de contenus spécifiques selon le titre
 const descriptions = {
   "Configuration gratuite":
     "Avec START-ALARM, créer votre plan d'habitation et tester sa vulnérabilité gratuitement.",
@@ -65,20 +78,26 @@ const descriptions = {
     "Avec START-ALARM, fini les « Ramenez le matériel au magasin » ou « Nous allons récupérer le matériel » !\n\n START-ALARM, c'est un réseau d'installateurs experts indépendants, présents partout en France.\n\n Votre installateur connaît parfaitement votre système, puisqu'il a programmé votre alarme. En cas de besoin, vous bénéficiez ainsi de l'assistance d'un expert qui connaît votre installation.",
 };
 
-//Dictionnaire d'image pour chaque
-const images = {
+// Dictionnaire mis à jour avec la vidéo pour "Sans abonnement"
+const media = {
   "Configuration gratuite": "/src/assets/img/detailAdv/creationPlan.png",
   "Testez avant d'acheter": "/src/assets/img/detailAdv/tauxEfficacité.png",
   "100% personnalisé": "/src/assets/img/detailAdv/personnalisation.png",
-  "Sans abonnement": "/images/sans-abonnement.jpg",
+  "Sans abonnement": "/src/assets/img/detailAdv/sansAbo.mp4", //Vidéo ici
   "Livré prêt à fonctionner": "/images/livre-pret-a-fonctionner.jpg",
   "Des experts près de chez vous": "/images/experts-pres-de-chez-vous.jpg",
-}
+};
 
-const advantageImage = computed(() => {
-  return images[props.title] || "/src/assets/img/detailAdv/default.png";
+// Récupère l'URL du média (image ou vidéo)
+const advantageMedia = computed(() => {
+  return media[props.title] || "/src/assets/img/detailAdv/default.png";
 });
-// Récupère la description associée ou un texte par défaut si non trouvée
+
+// Détecte automatiquement si le fichier est une vidéo
+const isVideo = computed(() => {
+  return /\.(mp4|webm|ogg)$/i.test(advantageMedia.value);
+});
+
 const advantageDescription = computed(() => {
   return (
     descriptions[props.title] ||
