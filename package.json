@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@svg-maps/france.departments": "^2.0.0",
     "@tailwindcss/vite": "^4.3.3",
     "lucide-vue-next": "^1.0.0",
     "tailwindcss": "^4.3.3",
