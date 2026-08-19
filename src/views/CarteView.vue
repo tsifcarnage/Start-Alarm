@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full max-w-7xl mx-auto p-4 md:p-6">
+  <div class="w-full mx-auto p-4 md:p-6">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
       
       <!-- COLONNE GAUCHE : Carte SVG -->
@@ -19,7 +19,7 @@
           <MapPin :size="16" class="text-(--light-blue)"/><span>Survolez un département pour voir son nom</span>
         </div>
 
-        <div class="relative w-full max-w-lg">
+        <div class="relative w-full ">
           <!-- Carte Principale de la France -->
           <svg
             :viewBox="france.viewBox"
@@ -45,13 +45,13 @@
 
           <!-- CARTOUCHE ZOOM : Paris / Petite Couronne (Bas Droit) -->
           <div
-            class="absolute bottom-20 -left-20 w-full max-w-36 sm:w-44 bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm p-2 rounded-lg border-2 border-slate-200 dark:border-slate-700 shadow-xl overflow-hidden z-10"
+            class="absolute bottom-20 -left-6 w-full max-w-36 sm:w-44 bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm p-2 rounded-lg border-2 border-slate-200 dark:border-slate-700 shadow-xl overflow-hidden z-10"
           >
             <p class="text-[10px] font-bold text-center text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">
               Zoom Paris & Petite Couronne
             </p>
             
-            <div class="w-full h-28 overflow-hidden relative rounded border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900">
+            <div class="w-full overflow-hidden relative rounded border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900">
               <svg
                 :viewBox="france.viewBox"
                 xmlns="http://www.w3.org/2000/svg"
