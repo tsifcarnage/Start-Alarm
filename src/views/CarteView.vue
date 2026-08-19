@@ -15,7 +15,7 @@
         >
           {{ hoveredDepartment }}
         </div>
-        <div v-else class="flex gap-2 mb-2 text-xs text-slate-400 italic">
+        <div v-else class="flex gap-2 mb-2 py-1 text-xs text-slate-400 italic">
           <MapPin :size="16" class="text-(--light-blue)"/><span>Survolez un département pour voir son nom</span>
         </div>
 
