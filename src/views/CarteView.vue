@@ -41,7 +41,7 @@
 
           <!-- CARTOUCHE ZOOM : Paris / Petite Couronne -->
           <div
-            class=" hidden md:block absolute -bottom-10 -left-10 w-28 sm:w-40 md:w-44 bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm p-1.5 sm:p-2 rounded-lg border-2 border-slate-200 dark:border-slate-700 shadow-xl overflow-hidden z-10"
+            class=" hidden xl:block absolute bottom-5 -left-10 w-28 sm:w-40 md:w-44 bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm p-1.5 sm:p-2 rounded-lg border-2 border-slate-200 dark:border-slate-700 shadow-xl overflow-hidden z-10"
           >
             <p
               class="text-[9px] sm:text-[10px] font-bold text-center text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1 truncate"
