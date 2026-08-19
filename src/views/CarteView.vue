@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full mx-auto p-4 md:p-6">
+  <div class="w-full mx-auto p-4 md:p-5">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
       
       <!-- COLONNE GAUCHE : Carte SVG -->
@@ -34,7 +34,7 @@
               @mouseenter="hoveredDepartment = department.name"
               @mouseleave="hoveredDepartment = null"
               @click="selectDepartment(department)"
-              class="cursor-pointer stroke-white transition-colors duration-200"
+              class="cursor-pointer stroke-white transition-colors duration-200 scale-90"
               :class="[
                 selectedDepartment?.id === department.id
                   ? 'fill-(--orange)'
