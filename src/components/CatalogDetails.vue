@@ -23,11 +23,11 @@
     </div>
 
     <!-- Grille des produits -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 ">
       <div
         v-for="item in filteredProducts"
         :key="item.id"
-        class="group bg-slate-50 dark:bg-slate-900/60 rounded-2xl p-4 border border-slate-200/80 dark:border-slate-800 hover:shadow-xl transition-all duration-300 flex flex-col justify-between relative"
+        class="group bg-slate-50 dark:bg-slate-900/60 rounded-2xl p-4 border border-slate-200/80 dark:border-slate-800 hover:shadow-xl transition-all duration-300 flex flex-col justify-between relative cursor-pointer"
       >
         <!-- Bouton Favoris / Icône
         <button
