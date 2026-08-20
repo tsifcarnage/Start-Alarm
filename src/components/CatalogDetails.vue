@@ -29,12 +29,12 @@
         :key="item.id"
         class="group bg-slate-50 dark:bg-slate-900/60 rounded-2xl p-4 border border-slate-200/80 dark:border-slate-800 hover:shadow-xl transition-all duration-300 flex flex-col justify-between relative"
       >
-        <!-- Bouton Favoris / Icône -->
+        <!-- Bouton Favoris / Icône
         <button
           class="absolute top-6 right-6 p-2 rounded-full bg-white dark:bg-slate-800 text-slate-400 hover:text-rose-500 shadow-sm transition-colors cursor-pointer"
         >
           <Heart :size="18" />
-        </button>
+        </button> -->
 
         <!-- Image du produit (Placeholder) -->
         <div
