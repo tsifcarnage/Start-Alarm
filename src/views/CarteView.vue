@@ -4,7 +4,7 @@
       <!-- COLONNE GAUCHE : Carte SVG -->
       <div class="lg:col-span-7 relative flex flex-col items-center">
         <h1 class="mb-4 text-center text-2xl md:text-3xl font-bold text-(--dark-blue)">
-          Carte des départements français
+          Un réseau d'experts près de chez-vous
         </h1>
 
         <!-- TOOLTIP AU SURVOL -->
@@ -148,7 +148,7 @@ const getDepartmentClass = (deptId) => {
   const isPris = departmentsData.value[deptId]?.statut === "pris";
   if (isPris) return "fill-rose-400 hover:fill-rose-600";
 
-  return "fill-blue-400 hover:fill-blue-600";
+  return "fill-slate-400 hover:fill-slate-600";
 };
 
 const selectDepartment = (dept) => {
