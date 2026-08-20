@@ -34,7 +34,7 @@
               @mouseenter="hoveredDepartment = department.name"
               @mouseleave="hoveredDepartment = null"
               @click="selectDepartment(department)"
-              class="cursor-pointer stroke-white transition-colors duration-200 scale-90"
+              class="cursor-pointer stroke-white dark:stroke-(--bg-secondary) transition-colors duration-200 scale-90"
               :class="getDepartmentClass(department.id)"
             />
           </svg>
@@ -65,7 +65,7 @@
                   @mouseenter="hoveredDepartment = department.name"
                   @mouseleave="hoveredDepartment = null"
                   @click="selectDepartment(department)"
-                  class="cursor-pointer stroke-white stroke-[0.2] sm:stroke-[0.3] transition-colors duration-200"
+                  class="cursor-pointer stroke-white dark:stroke-(--bg-secondary) stroke-[0.2] sm:stroke-[0.3] transition-colors duration-200"
                   :class="getDepartmentClass(department.id)"
                 />
               </svg>
