@@ -18,9 +18,15 @@
 
         <!-- COLONNE GAUCHE : Image -->
         <div class="bg-slate-100 dark:bg-slate-800/50 p-8 flex items-center justify-center relative min-h-65">
-          <img :src="`/src/assets/img/produits${product.img}`" :alt="product.title">
+          <img
+            v-if="product.img"
+            :src="`/src/assets/img/produits${product.img}`"
+            :alt="product.title"
+            class="max-h-56 object-contain"
+          />
+          <ShieldAlert v-else :size="64" class="text-slate-400/50" />
 
-          <!-- Vignette de sous-catégorie (à gauche) -->
+          <!-- Vignette sous-catégorie -->
           <span
             v-if="product.subcategory"
             class="absolute top-4 left-4 text-xs font-semibold px-3 py-1 bg-white/80 dark:bg-slate-900/80 rounded-full text-slate-600 dark:text-slate-300 backdrop-blur-sm"
@@ -28,7 +34,7 @@
             {{ product.subcategory }}
           </span>
 
-          <!-- Bouton Favoris (à droite de l'image, même hauteur) -->
+          <!-- Bouton Favoris -->
           <button
             @click="toggleFavorite(product)"
             class="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/80 dark:bg-slate-900/80 text-slate-400 hover:text-rose-500 shadow-md backdrop-blur-sm transition-all cursor-pointer hover:scale-110"
@@ -65,12 +71,12 @@
               </span>
             </div>
 
-            <!-- Redirection / Action vers la fiche produit -->
+            <!-- Action d'ajout au panier -->
             <button
-              @click="goToProductPage"
+              @click="handleAddToCart"
               class="w-full flex items-center justify-center gap-2 py-3.5 px-6 bg-(--orange) hover:bg-[#d64d00] text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all cursor-pointer"
             >
-              <span>Ajoutez au panier</span>
+              <span>Ajouter au panier</span>
               <ShoppingBag :size="18" />
             </button>
           </div>
@@ -83,6 +89,7 @@
 <script setup>
 import { X, ShieldAlert, ShoppingBag, Heart } from "lucide-vue-next";
 import { useFavorites } from "../composables/useFavorites";
+import { useCart } from "../composables/useCart";
 
 const props = defineProps({
   product: {
@@ -93,11 +100,11 @@ const props = defineProps({
 
 const emit = defineEmits(["close"]);
 
-// Import des méthodes du composable favoris
 const { toggleFavorite, isFavorite } = useFavorites();
+const { addToCart } = useCart();
 
-const goToProductPage = () => {
-  alert(`Redirection vers la page détaillée du produit : ${props.product.title}`);
+const handleAddToCart = () => {
+  addToCart(props.product);
   emit("close");
 };
 </script>

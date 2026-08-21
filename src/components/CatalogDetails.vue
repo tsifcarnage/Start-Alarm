@@ -135,12 +135,22 @@ const products = [
     category: "Éléments de base système Alarme",
     subcategory: "Les Sirènes",
     description:
-      "Puissante sirène d'alerte avec flash lumineux dissuasif à fort impact sonore.",
+      "Puissante sirène d'alerte avec flash lumineux dissuasif à fort impact sonore pour l'intérieur.",
     price: "89.90",
-    img: ""
+    img: "/sireneInterieur.png"
   },
   {
     id: 3,
+    title: "Sirène Extérieure 115 dB",
+    category: "Éléments de base système Alarme",
+    subcategory: "Les Sirènes",
+    description:
+      "Sirène extérieure autonome et étanche avec flash stroboscopique dissuasif.",
+    price: "129.90",
+    img: "/sireneExterieur.png"
+  },
+  {
+    id: 4,
     title: "Clavier de Commande Tactile",
     category: "Éléments de base système Alarme",
     subcategory: "Les Éléments de commande",
@@ -150,7 +160,7 @@ const products = [
     img: ""
   },
   {
-    id: 4,
+    id: 5,
     title: "Détecteur de Mouvement PIR",
     category: "Détection intérieure",
     subcategory: "Volumétrique",
@@ -160,7 +170,7 @@ const products = [
     img: ""
   },
   {
-    id: 5,
+    id: 6,
     title: "Détecteur d'Ouverture Magnétique",
     category: "Détection intérieure",
     subcategory: "Périmétrique",
@@ -170,7 +180,7 @@ const products = [
     img: ""
   },
   {
-    id: 6,
+    id: 7,
     title: "Barrière Infrarouge Extérieure",
     category: "Détection extérieure",
     subcategory: "Les Radars",
@@ -180,7 +190,7 @@ const products = [
     img: ""
   },
   {
-    id: 7,
+    id: 8,
     title: "Caméra Extérieure Pro 4K",
     category: "Détection extérieure",
     subcategory: "Les Caméras",
@@ -190,7 +200,7 @@ const products = [
     img: ""
   },
   {
-    id: 8,
+    id: 9,
     title: "Détecteur de Fumée Connecté",
     category: "Détection technique",
     subcategory: "Incendie",
@@ -200,7 +210,7 @@ const products = [
     img: ""
   },
   {
-    id: 9,
+    id: 10,
     title: "Sonde Anti-Inondation",
     category: "Détection technique",
     subcategory: "Innondation",
@@ -210,7 +220,7 @@ const products = [
     img: ""
   },
   {
-    id: 10,
+    id: 11,
     title: "Bouton Anti-Agression SOS",
     category: "Protection à la personne",
     subcategory: "SOS",
@@ -220,7 +230,7 @@ const products = [
     img: ""
   },
   {
-    id: 11,
+    id: 12,
     title: "Détecteur de Choc & Séismique",
     category: "Protection des biens de valeur",
     subcategory: "La centrale",
@@ -230,7 +240,7 @@ const products = [
     img: ""
   },
   {
-    id: 12,
+    id: 13,
     title: "Prise Connectée Intelligente",
     category: "Domotique",
     subcategory: "",
