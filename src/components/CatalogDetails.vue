@@ -30,23 +30,27 @@
         @click="openModal(item)"
         class="group bg-slate-50 dark:bg-slate-900/60 rounded-2xl p-4 border border-slate-200/80 dark:border-slate-800 hover:shadow-xl transition-all duration-300 flex flex-col justify-between relative cursor-pointer"
       >
-        <!-- Bouton Favoris (Positionné au z-10 pour éviter le masquage au survol) -->
+        <!-- Bouton Favoris synchronisé avec la page Favoris -->
         <button
-          @click.stop="toggleFavorite(item.id)"
+          @click.stop="toggleFavorite(item)"
           class="absolute top-6 right-6 z-10 p-2 rounded-full bg-white/90 dark:bg-slate-800/90 text-slate-400 hover:text-rose-500 shadow-md transition-all cursor-pointer hover:scale-110"
           title="Mettre en favoris"
         >
           <Heart
             :size="18"
-            :class="{ 'fill-rose-500 text-rose-500': favorites.includes(item.id) }"
+            :class="{ 'fill-rose-500 text-rose-500': isFavorite(item.id) }"
           />
         </button>
 
-        <!-- Image du produit (Ajustement overflow pour ne pas masquer le cœur) -->
-        <div
-          class="w-full h-48 bg-slate-200/60 dark:bg-slate-800 rounded-xl mb-4 flex items-center justify-center overflow-hidden"
-        >
-          <ShieldAlert :size="56" class="text-slate-400/50 group-hover:scale-110 transition-transform duration-300" />
+        <!-- Image du produit -->
+        <div class="w-full h-48 bg-slate-200/60 dark:bg-slate-800 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
+          <img
+            v-if="item.img"
+            :src="`/src/assets/img/produits${item.img}`"
+            :alt="item.title"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          />
+          <ShieldAlert v-else :size="56" class="text-slate-400/50" />
         </div>
 
         <!-- Infos produit -->
@@ -90,6 +94,7 @@
 import { ref, computed } from "vue";
 import { Heart, ShoppingBag, ShieldAlert } from "lucide-vue-next";
 import ProductModal from "./ProductModal.vue";
+import { useFavorites } from "../composables/useFavorites";
 
 const props = defineProps({
   selectedCategory: {
@@ -102,20 +107,14 @@ const props = defineProps({
   },
 });
 
-// État de la modal et des favoris
+// Récupération des méthodes du store réactif de favoris
+const { toggleFavorite, isFavorite } = useFavorites();
+
+// État de la modal
 const selectedProduct = ref(null);
-const favorites = ref([]);
 
 const openModal = (product) => {
   selectedProduct.value = product;
-};
-
-const toggleFavorite = (id) => {
-  if (favorites.value.includes(id)) {
-    favorites.value = favorites.value.filter((favId) => favId !== id);
-  } else {
-    favorites.value.push(id);
-  }
 };
 
 // Liste des produits
@@ -128,6 +127,7 @@ const products = [
     description:
       "Unité centrale multi-réseaux avec batterie de secours et transmission 4G sécurisée.",
     price: "299.00",
+    img: "/centrale.png"
   },
   {
     id: 2,
@@ -137,6 +137,7 @@ const products = [
     description:
       "Puissante sirène d'alerte avec flash lumineux dissuasif à fort impact sonore.",
     price: "89.90",
+    img: ""
   },
   {
     id: 3,
@@ -146,6 +147,7 @@ const products = [
     description:
       "Lecteur de badge RFID et code PIN pour armement/désarmement simplifié.",
     price: "69.00",
+    img: ""
   },
   {
     id: 4,
@@ -155,15 +157,17 @@ const products = [
     description:
       "Infrarouge haute précision compatible animaux de compagnie jusqu'à 25 kg.",
     price: "45.00",
+    img: ""
   },
   {
     id: 5,
     title: "Détecteur d'Ouverture Magnétique",
     category: "Détection intérieure",
-    subcategory: "Périmetrically",
+    subcategory: "Périmétrique",
     description:
       "Protection discrète pour portes et fenêtres avec alerte immédiate avant intrusion.",
     price: "32.00",
+    img: ""
   },
   {
     id: 6,
@@ -173,6 +177,7 @@ const products = [
     description:
       "Double faisceau étanche longue portée spécial jardins et terrasses.",
     price: "159.00",
+    img: ""
   },
   {
     id: 7,
@@ -182,6 +187,7 @@ const products = [
     description:
       "Vision nocturne couleur, projecteur LED et détection d'humains intelligente.",
     price: "189.90",
+    img: ""
   },
   {
     id: 8,
@@ -191,6 +197,7 @@ const products = [
     description:
       "Alarme optique de fumée autonome conforme à la norme NF EN 14604.",
     price: "55.00",
+    img: ""
   },
   {
     id: 9,
@@ -200,6 +207,7 @@ const products = [
     description:
       "Détecte instantanément la présence de liquide en cas de fuite ou surverse.",
     price: "42.00",
+    img: ""
   },
   {
     id: 10,
@@ -209,6 +217,7 @@ const products = [
     description:
       "Télécommande de détresse portable pour déclencher l'alerte silencieuse d'urgence.",
     price: "29.90",
+    img: ""
   },
   {
     id: 11,
@@ -218,6 +227,7 @@ const products = [
     description:
       "Capteur de vibrations spécifique pour coffre-fort et vitrines de valeur.",
     price: "79.00",
+    img: ""
   },
   {
     id: 12,
@@ -227,6 +237,7 @@ const products = [
     description:
       "Permet de simuler une présence et de contrôler vos appareils à distance.",
     price: "24.90",
+    img: ""
   },
 ];
 

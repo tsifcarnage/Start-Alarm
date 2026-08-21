@@ -18,7 +18,7 @@
 
         <!-- COLONNE GAUCHE : Image -->
         <div class="bg-slate-100 dark:bg-slate-800/50 p-8 flex items-center justify-center relative min-h-65">
-          <ShieldAlert :size="100" class="text-slate-400/60" />
+          <img :src="[`/src/assets/img/produits/${product.img}`]" alt="">
           <span
             v-if="product.subcategory"
             class="absolute top-4 left-4 text-xs font-semibold px-3 py-1 bg-white/80 dark:bg-slate-900/80 rounded-full text-slate-600 dark:text-slate-300 backdrop-blur-sm"
@@ -56,8 +56,8 @@
               @click="goToProductPage"
               class="w-full flex items-center justify-center gap-2 py-3.5 px-6 bg-(--orange) hover:bg-[#d64d00] text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all cursor-pointer"
             >
-              <span>Voir la fiche produit</span>
-              <ExternalLink :size="18" />
+              <span>Ajoutez au panier</span>
+              <ShoppingBag :size="18" />
             </button>
           </div>
         </div>
@@ -67,7 +67,7 @@
 </template>
 
 <script setup>
-import { X, ShieldAlert, ExternalLink } from "lucide-vue-next";
+import { X, ShieldAlert, ShoppingBag } from "lucide-vue-next";
 
 const props = defineProps({
   product: {

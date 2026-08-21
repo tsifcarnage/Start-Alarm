@@ -31,9 +31,9 @@ const routes = [
         component: () => import('../views/CarteView.vue')
       },
       {
-        path: 'contact',
-        name: 'contact',
-        component: () => import('../views/ContactView.vue')
+        path: 'favoris',
+        name: 'favoris',
+        component: () => import('../views/FavorisView.vue')
       }
     ]
   },
