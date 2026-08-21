@@ -18,33 +18,13 @@
 
         <!-- COLONNE GAUCHE : Image -->
         <div class="bg-slate-100 dark:bg-slate-800/50 p-8 flex items-center justify-center relative min-h-65">
-          <img
-            v-if="product.img"
-            :src="`/src/assets/img/produits${product.img}`"
-            :alt="product.title"
-            class="max-h-56 object-contain"
-          />
-          <ShieldAlert v-else :size="64" class="text-slate-400/50" />
-
-          <!-- Vignette sous-catégorie -->
+          <img :src="[`/src/assets/img/produits/${product.img}`]" alt="">
           <span
             v-if="product.subcategory"
             class="absolute top-4 left-4 text-xs font-semibold px-3 py-1 bg-white/80 dark:bg-slate-900/80 rounded-full text-slate-600 dark:text-slate-300 backdrop-blur-sm"
           >
             {{ product.subcategory }}
           </span>
-
-          <!-- Bouton Favoris -->
-          <button
-            @click="toggleFavorite(product)"
-            class="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/80 dark:bg-slate-900/80 text-slate-400 hover:text-rose-500 shadow-md backdrop-blur-sm transition-all cursor-pointer hover:scale-110"
-            title="Mettre en favoris"
-          >
-            <Heart
-              :size="18"
-              :class="{ 'fill-rose-500 text-rose-500': isFavorite(product.id) }"
-            />
-          </button>
         </div>
 
         <!-- COLONNE DROITE : Détails & Actions -->
@@ -71,12 +51,12 @@
               </span>
             </div>
 
-            <!-- Action d'ajout au panier -->
+            <!-- Redirection / Action vers la fiche produit -->
             <button
-              @click="handleAddToCart"
+              @click="goToProductPage"
               class="w-full flex items-center justify-center gap-2 py-3.5 px-6 bg-(--orange) hover:bg-[#d64d00] text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all cursor-pointer"
             >
-              <span>Ajouter au panier</span>
+              <span>Ajoutez au panier</span>
               <ShoppingBag :size="18" />
             </button>
           </div>
@@ -87,9 +67,7 @@
 </template>
 
 <script setup>
-import { X, ShieldAlert, ShoppingBag, Heart } from "lucide-vue-next";
-import { useFavorites } from "../composables/useFavorites";
-import { useCart } from "../composables/useCart";
+import { X, ShieldAlert, ShoppingBag } from "lucide-vue-next";
 
 const props = defineProps({
   product: {
@@ -100,11 +78,9 @@ const props = defineProps({
 
 const emit = defineEmits(["close"]);
 
-const { toggleFavorite, isFavorite } = useFavorites();
-const { addToCart } = useCart();
-
-const handleAddToCart = () => {
-  addToCart(props.product);
+const goToProductPage = () => {
+  // Remplace par ta route vers la page dédiée si nécessaire (ex: router.push(`/produit/${props.product.id}`))
+  alert(`Redirection vers la page détaillée du produit : ${props.product.title}`);
   emit("close");
 };
 </script>
