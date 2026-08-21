@@ -23,24 +23,30 @@
     </div>
 
     <!-- Grille des produits -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 ">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       <div
         v-for="item in filteredProducts"
         :key="item.id"
+        @click="openModal(item)"
         class="group bg-slate-50 dark:bg-slate-900/60 rounded-2xl p-4 border border-slate-200/80 dark:border-slate-800 hover:shadow-xl transition-all duration-300 flex flex-col justify-between relative cursor-pointer"
       >
-        <!-- Bouton Favoris / Icône
+        <!-- Bouton Favoris (Positionné au z-10 pour éviter le masquage au survol) -->
         <button
-          class="absolute top-6 right-6 p-2 rounded-full bg-white dark:bg-slate-800 text-slate-400 hover:text-rose-500 shadow-sm transition-colors cursor-pointer"
+          @click.stop="toggleFavorite(item.id)"
+          class="absolute top-6 right-6 z-10 p-2 rounded-full bg-white/90 dark:bg-slate-800/90 text-slate-400 hover:text-rose-500 shadow-md transition-all cursor-pointer hover:scale-110"
+          title="Mettre en favoris"
         >
-          <Heart :size="18" />
-        </button> -->
+          <Heart
+            :size="18"
+            :class="{ 'fill-rose-500 text-rose-500': favorites.includes(item.id) }"
+          />
+        </button>
 
-        <!-- Image du produit (Placeholder) -->
+        <!-- Image du produit (Ajustement overflow pour ne pas masquer le cœur) -->
         <div
-          class="w-full h-48 bg-slate-200/60 dark:bg-slate-800 rounded-xl mb-4 flex items-center justify-center overflow-hidden group-hover:scale-[1.02] transition-transform duration-300"
+          class="w-full h-48 bg-slate-200/60 dark:bg-slate-800 rounded-xl mb-4 flex items-center justify-center overflow-hidden"
         >
-          <ShieldAlert :size="56" class="text-slate-400/50" />
+          <ShieldAlert :size="56" class="text-slate-400/50 group-hover:scale-110 transition-transform duration-300" />
         </div>
 
         <!-- Infos produit -->
@@ -63,6 +69,7 @@
             {{ item.price }} €
           </span>
           <button
+            @click.stop="openModal(item)"
             class="p-2.5 bg-(--orange) hover:bg-[#d64d00] text-white rounded-xl shadow-md hover:shadow-lg transition-all cursor-pointer"
           >
             <ShoppingBag :size="18" />
@@ -70,12 +77,19 @@
         </div>
       </div>
     </div>
+
+    <!-- Composant Modal Popup -->
+    <ProductModal
+      :product="selectedProduct"
+      @close="selectedProduct = null"
+    />
   </div>
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { ref, computed } from "vue";
 import { Heart, ShoppingBag, ShieldAlert } from "lucide-vue-next";
+import ProductModal from "./ProductModal.vue";
 
 const props = defineProps({
   selectedCategory: {
@@ -88,9 +102,24 @@ const props = defineProps({
   },
 });
 
-// Liste réaliste des produits avec leurs catégories respectives
+// État de la modal et des favoris
+const selectedProduct = ref(null);
+const favorites = ref([]);
+
+const openModal = (product) => {
+  selectedProduct.value = product;
+};
+
+const toggleFavorite = (id) => {
+  if (favorites.value.includes(id)) {
+    favorites.value = favorites.value.filter((favId) => favId !== id);
+  } else {
+    favorites.value.push(id);
+  }
+};
+
+// Liste des produits
 const products = [
-  // 1. Éléments de base système Alarme
   {
     id: 1,
     title: "Centrale d'Alarme Smart-Hub 4G",
@@ -118,8 +147,6 @@ const products = [
       "Lecteur de badge RFID et code PIN pour armement/désarmement simplifié.",
     price: "69.00",
   },
-
-  // 2. Détection intérieure
   {
     id: 4,
     title: "Détecteur de Mouvement PIR",
@@ -133,13 +160,11 @@ const products = [
     id: 5,
     title: "Détecteur d'Ouverture Magnétique",
     category: "Détection intérieure",
-    subcategory: "Périmétrique",
+    subcategory: "Périmetrically",
     description:
       "Protection discrète pour portes et fenêtres avec alerte immédiate avant intrusion.",
     price: "32.00",
   },
-
-  // 3. Détection extérieure
   {
     id: 6,
     title: "Barrière Infrarouge Extérieure",
@@ -158,8 +183,6 @@ const products = [
       "Vision nocturne couleur, projecteur LED et détection d'humains intelligente.",
     price: "189.90",
   },
-
-  // 4. Détection technique
   {
     id: 8,
     title: "Détecteur de Fumée Connecté",
@@ -178,8 +201,6 @@ const products = [
       "Détecte instantanément la présence de liquide en cas de fuite ou surverse.",
     price: "42.00",
   },
-
-  // 5. Protection à la personne
   {
     id: 10,
     title: "Bouton Anti-Agression SOS",
@@ -189,8 +210,6 @@ const products = [
       "Télécommande de détresse portable pour déclencher l'alerte silencieuse d'urgence.",
     price: "29.90",
   },
-
-  // 6. Protection des biens de valeur
   {
     id: 11,
     title: "Détecteur de Choc & Séismique",
@@ -200,8 +219,6 @@ const products = [
       "Capteur de vibrations spécifique pour coffre-fort et vitrines de valeur.",
     price: "79.00",
   },
-
-  // 7. Domotique
   {
     id: 12,
     title: "Prise Connectée Intelligente",
@@ -216,18 +233,15 @@ const products = [
 // Filtrage dynamique selon la sélection
 const filteredProducts = computed(() => {
   return products.filter((product) => {
-    // Si une sous-catégorie est sélectionnée
     if (props.selectedSubcategory) {
       return (
         product.category === props.selectedCategory &&
         product.subcategory === props.selectedSubcategory
       );
     }
-    // Si seule la catégorie principale est sélectionnée
     if (props.selectedCategory) {
       return product.category === props.selectedCategory;
     }
-    // Sinon, retourne tous les produits
     return true;
   });
 });
