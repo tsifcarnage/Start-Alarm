@@ -18,13 +18,27 @@
 
         <!-- COLONNE GAUCHE : Image -->
         <div class="bg-slate-100 dark:bg-slate-800/50 p-8 flex items-center justify-center relative min-h-65">
-          <img :src="[`/src/assets/img/produits/${product.img}`]" alt="">
+          <img :src="`/src/assets/img/produits${product.img}`" :alt="product.title">
+
+          <!-- Vignette de sous-catégorie (à gauche) -->
           <span
             v-if="product.subcategory"
             class="absolute top-4 left-4 text-xs font-semibold px-3 py-1 bg-white/80 dark:bg-slate-900/80 rounded-full text-slate-600 dark:text-slate-300 backdrop-blur-sm"
           >
             {{ product.subcategory }}
           </span>
+
+          <!-- Bouton Favoris (à droite de l'image, même hauteur) -->
+          <button
+            @click="toggleFavorite(product)"
+            class="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/80 dark:bg-slate-900/80 text-slate-400 hover:text-rose-500 shadow-md backdrop-blur-sm transition-all cursor-pointer hover:scale-110"
+            title="Mettre en favoris"
+          >
+            <Heart
+              :size="18"
+              :class="{ 'fill-rose-500 text-rose-500': isFavorite(product.id) }"
+            />
+          </button>
         </div>
 
         <!-- COLONNE DROITE : Détails & Actions -->
@@ -67,7 +81,8 @@
 </template>
 
 <script setup>
-import { X, ShieldAlert, ShoppingBag } from "lucide-vue-next";
+import { X, ShieldAlert, ShoppingBag, Heart } from "lucide-vue-next";
+import { useFavorites } from "../composables/useFavorites";
 
 const props = defineProps({
   product: {
@@ -78,8 +93,10 @@ const props = defineProps({
 
 const emit = defineEmits(["close"]);
 
+// Import des méthodes du composable favoris
+const { toggleFavorite, isFavorite } = useFavorites();
+
 const goToProductPage = () => {
-  // Remplace par ta route vers la page dédiée si nécessaire (ex: router.push(`/produit/${props.product.id}`))
   alert(`Redirection vers la page détaillée du produit : ${props.product.title}`);
   emit("close");
 };
