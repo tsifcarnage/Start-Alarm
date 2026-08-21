@@ -45,12 +45,18 @@ onMounted(() => {
     </RouterLink>
 
     <!-- Panier -->
-    <button
-      class="cursor-pointer p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+    <RouterLink
+      to="/panier"
+      class="cursor-pointer p-2 rounded-full transition-colors"
+      :class="
+        $route.path === '/panier'
+          ? 'text-orange-500 bg-red-100 dark:bg-orange-900/30'
+          : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800'
+      "
       title="Mon panier"
     >
       <ShoppingBag :size="20" />
-    </button>
+    </RouterLink>
 
     <!-- Theme Toggle -->
     <button
