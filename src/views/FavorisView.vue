@@ -2,11 +2,18 @@
   <div class="w-full max-w-7xl mx-auto space-y-6">
     <!-- En-tête -->
     <div
-      class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4"
+      class="relative flex items-center justify-center border-b border-slate-200 dark:border-slate-800 pb-4"
     >
-      <div>
+      <RouterLink 
+        to="/produits" 
+        class="absolute left-0 gap-2 py-2 px-3 bg-[#003a7194] hover:bg-[#00284f] text-white font-semibold rounded-md shadow-sm transition-colors"
+      >
+        ← Retour
+      </RouterLink>
+
+      <div class="text-center">
         <h1
-          class="text-2xl md:text-3xl font-extrabold text-(--dark-blue) dark:text-white"
+          class="text-2xl my-4 md:text-3xl font-extrabold text-(--dark-blue) dark:text-white"
         >
           Mes Favoris
         </h1>
@@ -14,9 +21,10 @@
           Retrouvez tous les articles que vous avez mis de côté.
         </p>
       </div>
+
       <span
         v-if="favorites.length > 0"
-        class="text-xs font-bold text-(--orange) bg-(--orange)/10 px-3 py-1.5 rounded-full"
+        class="absolute right-0 text-xs font-bold text-(--orange) bg-(--orange)/10 px-3 py-1.5 rounded-full"
       >
         {{ favorites.length }} article(s) sauvegardé(s)
       </span>
